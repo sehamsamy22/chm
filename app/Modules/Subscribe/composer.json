@@ -1,0 +1,23 @@
+{
+    "name": "Ejjadh/subscribe",
+    "description": "",
+    "authors": [
+        {
+            "name": "Mahmoud Shennawy",
+            "email": "shennawy@ejjadh.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Modules\\Subscribe\\": ""
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Subscribe",
+    "alias": "subscribe",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "App\\Modules\\Subscribe\\Providers\\SubscribeServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -1,0 +1,21 @@
+{
+    "Permission": true,
+    "Setting": true,
+    "Subscribe": true,
+    "Contact": true,
+    "Address": true,
+    "Category": true,
+    "Blog": true,
+    "Page": true,
+    "Payment": true,
+    "Product": true,
+    "Cart": true,
+    "Coupon": true,
+    "Order": true,
+    "Ad": true,
+    "Wallet": true,
+    "Notification": true,
+    "Shipping": true,
+    "Warehouse": true,
+    "Store": true
+}

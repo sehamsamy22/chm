@@ -1,0 +1,22 @@
+{
+    "name": "ejjadh/category",
+    "description": "",
+    "authors": [
+        {
+            "name": "Mahmoud Shennawy",
+            "email": "shennawy@ejjadh.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Modules\\Category\\": ""
+        }
+    }
+}
