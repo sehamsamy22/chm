@@ -1,0 +1,1 @@
+[06-Jan-2022 09:47:43 UTC] PHP Fatal error:  Cannot use Socialite as Socialite because the name is already in use in /home/ejjadh/public_html/chm/app/Http/Controllers/Customers/SocialController.php on line 10
