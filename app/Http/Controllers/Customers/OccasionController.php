@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OccasionRequest;
 use App\Http\Resources\OccasionResource;
 use App\Models\Occasion;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class OccasionController extends Controller
 
     public function index()
     {
-        $occasions = Occasion::where('user_id', auth()->user()->id)->orderBy('date', 'DESC')->get();
+        $occasions = Occasion::where('user_id', auth()->user()->id)->where('date','>',Carbon::now())->orderBy('date', 'asc')->get();
         return $this->apiResponse(OccasionResource::collection($occasions));
     }
 
