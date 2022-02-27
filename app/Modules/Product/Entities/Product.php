@@ -23,7 +23,7 @@ class Product extends Model
     use HasFactory, SoftDeletes, HasTranslations;
 
     protected $fillable = ['name', 'description', 'SKU', 'price', 'discount_price', 'discount_start_date', 'discount_end_date', 'image', 'stock', 'deactivated_at', 'deactivation_notes', 'max_per_order'
-        , 'digit', 'category_id', 'creator_id', 'bundle', 'store_id', 'type', 'time_period', 'brand_id'
+        , 'digit', 'category_id', 'creator_id', 'bundle', 'store_id', 'type', 'time_period', 'brand_id','is_package'
     ];
 
     public $translatable = ['name', 'description'];
@@ -109,6 +109,11 @@ class Product extends Model
     public function bundles()
     {
         return $this->hasMany(BundleProduct::class, 'parent_id');
+    }
+
+    public function packageCategories()
+    {
+        return $this->hasMany(PackageCategory::class, 'product_id');
     }
 
     public function Lists()

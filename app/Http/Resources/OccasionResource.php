@@ -22,6 +22,7 @@ class OccasionResource extends JsonResource
             'description' => $this->description ,
             'date' => $this->date,
             'type' => $this->type,
+            'isRecurring'=>$this->isRecurring,
 
         ];
     }

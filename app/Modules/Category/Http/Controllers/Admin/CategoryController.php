@@ -35,14 +35,22 @@ class CategoryController extends Controller
         $this->middleware('permission:category-delete', ['only' => ['destroy']]);
     }
 
-        public function index(Request $request)
+    public function index(Request $request)
     {
-        $categories = isset($request['type']) ? $this->categoryRepository->haveAdditions() : $this->categoryRepository->notHaveAdditions();
+        $categories = Category::query();
+//        isset($request['type'])&& ? $this->categoryRepository->haveAdditions() : $this->categoryRepository->notHaveAdditions();
+        if (isset($request['type']) && $request['type'] == 'additions') {
+            $categories->where('have_additions', 1)->get();;
+        } elseif (isset($request['type']) && $request['type'] == 'package') {
+            $categories->where('is_package', 1)->get();
+        } elseif (!isset($request['type'])) {
+            $categories->where('have_additions', 0)->get();;
+        }
         $total = $categories->count();
-        return $this->apiResponse(['categories'=>CategoryWithAdditionsResource::collection($categories->paginate($request['pageLimit']??$total)),
+        return $this->apiResponse(['categories' => CategoryWithAdditionsResource::collection($categories->paginate($request['pageLimit'] ?? $total)),
             'total' => $total,
-            'page'=>$request['page'],
-            'pageLimit'=>$request['pageLimit'],
+            'page' => $request['page'],
+            'pageLimit' => $request['pageLimit'],
             'lastPages' => isset($request['pageLimit']) ? ceil((!empty($categories) ? $total : 0) / $request['pageLimit']) : 0]);
     }
 

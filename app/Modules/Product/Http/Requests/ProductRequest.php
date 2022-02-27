@@ -47,14 +47,14 @@ class ProductRequest extends FormRequest
             'max_per_order' => 'required|integer|min:1',
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
-            'creator_id' => 'required|exists:admins,id',
             'discount_start_date' => 'nullable|date',
             'discount_end_date' => 'nullable|date',
             'deactivated_at' => 'nullable|date',
             'deactivation_notes' => 'nullable|string',
             'digit' => 'required|boolean',
+            'is_package' => 'nullable|int|in:0,1',
             'bundle' => 'sometimes|boolean',
-            'type' => 'sometimes|in:subscription,normal,service,additions',
+            'type' => 'sometimes|in:subscription,normal,service,additions,package_addition',
             'time_period' => 'required_if:type,subscription',
 //            'options_values' => ['nullable', 'array', Rule::requiredIf($request->bundle != 1)],
 //            'options_values.*.option_id' =>'required|exists:options,id',
@@ -62,7 +62,9 @@ class ProductRequest extends FormRequest
             'tags' => 'nullable|array',
             'images' => 'nullable|array',
             'bundle_products' => 'required_if:bundle,==,1|array',
-            'bundle_products.*' => 'exists:products,id'
+            'bundle_products.*' => 'exists:products,id',
+            'package_categories' => 'required_if:is_package,==,1|array',
+            'package_categories.*' => 'exists:categories,id'
         ];
     }
 }
