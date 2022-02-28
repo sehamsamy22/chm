@@ -21,7 +21,7 @@ class ProductResource extends JsonResource
 
     public function toArray($request)
     {
-        //        dd(exchangeRate(100,'SAR'));
+             dd($this->packageCategories);
         $user = Auth::guard('api')->user();
         return [
             'id' => $this->id,
@@ -78,6 +78,9 @@ class ProductResource extends JsonResource
                     'product_positives' => $rate->pivot->product_positives,
                     'created_at' => Carbon::parse($rate->created_at)->format('d-m-Y')
                 ];
+            }),
+            'package_categories' => $this->packageCategories->transform(function ($tag) {
+                return $tag->tag ?? '';
             }),
         ];
     }

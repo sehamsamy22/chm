@@ -70,6 +70,6 @@ class OccasionController extends Controller
     {
         $occasion = Occasion::findOrFail($id);
         $occasion->delete();
-        return $this->apiResponse(OccasionResource::collection(Occasion::where('user_id', auth()->user()->id)->get()));
+        return $this->apiResponse(OccasionResource::collection(Occasion::where('user_id', auth()->user()->id)->where('date','>',Carbon::now())->get()));
     }
 }
