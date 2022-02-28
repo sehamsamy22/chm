@@ -28,13 +28,11 @@ class ProductController extends Controller
 
     public function filtration(Request $request)
     {
-//        dd($request->all());
         $request->validate([
             "sub_categories" => "array",
             "main_category" => "sometimes|exists:categories,id",
             "list_id" => "sometimes|exists:lists,id",
             "type"=>"sometimes|in:normal,subscription,service,additions",
-
         ]);
         $products = $this->productRepository->filterProducts($request->all());
         $total = $products->count();
