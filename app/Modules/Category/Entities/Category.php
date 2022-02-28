@@ -20,7 +20,7 @@ class Category extends Model
 
     public $translatable = ['name'];
     protected $softDelete = true;
-    protected $fillable = ['name', 'image', 'parent_id', 'store_id', 'have_additions'];
+    protected $fillable = ['name', 'image', 'parent_id', 'store_id', 'have_additions','is_package'];
 
     protected static function booted()
     {

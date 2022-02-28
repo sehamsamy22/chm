@@ -2,6 +2,7 @@
 
 use App\Modules\Product\Entities\Product;
 use App\Scopes\NormalProductScope;
+use Illuminate\Support\Facades\Auth;
 
 class ProductRepository
 {
@@ -13,18 +14,29 @@ class ProductRepository
 
     public function subscription()
     {
-        return Product::where('type','subscription')->orderBy('id', 'DESC')->get();
+        return Product::where('type', 'subscription')->orderBy('id', 'DESC')->get();
     }
+
     // store  new  instances of model
     public function storeProduct($data)
     {
-       $data['store_id']=app('Illuminate\Http\Request')->header('store_id');
+        $data['store_id'] = app('Illuminate\Http\Request')->header('store_id');
+        $data['creator_id'] = Auth::user()->id;
         $product = Product::create($data);
-        foreach ($data['tags'] as $tag) {
-            $product->tags()->create(['tag' => $tag]);
+        if (isset($data['tags'])) {
+            foreach ($data['tags'] as $tag) {
+                $product->tags()->create(['tag' => $tag]);
+            }
         }
-        foreach ($data['images'] as $image) {
-            $product->images()->create(['image' => $image]);
+        if (isset($data['images'])) {
+            foreach ($data['images'] as $image) {
+                $product->images()->create(['image' => $image]);
+            }
+        }
+        if ($product->is_package == 1) {
+            foreach ($data['package_categories'] as $categoryId) {
+                $product->packageCategories()->create(['category_id' => $categoryId]);
+            }
         }
         if ($product->bundle == 1) {
             foreach ($data['bundle_products'] as $productId) {
@@ -39,16 +51,22 @@ class ProductRepository
     // update  new  instances of model
     public function update($data, $id)
     {
-        $data['store_id']=app('Illuminate\Http\Request')->header('store_id');
-        $product = Product::withoutGlobalScope(NormalProductScope::class)->where('id',$id)->first();
+        $data['store_id'] = app('Illuminate\Http\Request')->header('store_id');
+        $product = Product::withoutGlobalScope(NormalProductScope::class)->where('id', $id)->first();
         $product->update($data);
         $product->tags()->delete();
         $product->images()->delete();
+        $product->packageCategories()->delete();
         foreach ($data['tags'] as $tag) {
             $product->tags()->create(['tag' => $tag]);
         }
         foreach ($data['images'] as $image) {
             $product->images()->create(['image' => $image]);
+        }
+        if ($product->is_package == 1) {
+            foreach ($data['package_categories'] as $categoryId) {
+                $product->packageCategories()->create(['category_id' => $categoryId]);
+            }
         }
         if ($product->bundle == 1) {
             $product->bundles()->delete();
@@ -109,7 +127,7 @@ class ProductRepository
     public function filterProducts($params): object
     {
         // QFETHING  PRODUCTS
-        $products = Product::with(['options', 'category.options', 'lists', 'images', 'comments', 'rates','brand'])
+        $products = Product::with(['options', 'category.options', 'lists', 'images', 'comments', 'rates', 'brand'])
             ->withoutGlobalScope(NormalProductScope::class)->orderBy('id', 'DESC');
         // APPLY  REQUESTS  FILTER
         //        SEARCH  WORD
@@ -135,10 +153,10 @@ class ProductRepository
         if (!empty($params['brand'])) {
             $products->where('brand_id', $params['brand']);
         }
-         // PRODUCT TYPE  FILTER
+        // PRODUCT TYPE  FILTER
         if (!empty($params['type'])) {
             $products->where('type', $params['type']);
-        }    
+        }
         // PRICE  RANGE  FILTER
         if (isset($params['min_price']) & isset($params['max_price'])) {
             $min_price = !isset($params['min_price']) ? 0 : $params['min_price'];

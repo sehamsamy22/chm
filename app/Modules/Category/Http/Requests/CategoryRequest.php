@@ -33,6 +33,7 @@ class CategoryRequest extends FormRequest
             'parent_id' => 'nullable|exists:categories,id',
             'store_id' => 'nullable|exists:stores,id',
             'have_additions' => 'nullable|int|in:0,1',
+            'is_package' => 'nullable|int|in:0,1',
         ];
     }
 }
