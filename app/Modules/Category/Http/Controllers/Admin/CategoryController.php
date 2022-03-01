@@ -26,21 +26,20 @@ class CategoryController extends Controller
 
     private $categoryRepository;
 
-    public function __construct(CategoryRepository $categoryRepository)
-    {
-        $this->categoryRepository = $categoryRepository;
-        $this->middleware('permission:category-list', ['only' => ['index', 'show']]);
-        $this->middleware('permission:category-create', ['only' => ['create', 'store']]);
-        $this->middleware('permission:category-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:category-delete', ['only' => ['destroy']]);
-    }
+//    public function __construct(CategoryRepository $categoryRepository)
+//    {
+//        $this->categoryRepository = $categoryRepository;
+//        $this->middleware('permission:category-list', ['only' => ['index', 'show']]);
+//        $this->middleware('permission:category-create', ['only' => ['create', 'store']]);
+//        $this->middleware('permission:category-edit', ['only' => ['edit', 'update']]);
+//        $this->middleware('permission:category-delete', ['only' => ['destroy']]);
+//    }
 
     public function index(Request $request)
     {
         $categories = Category::query();
-//        isset($request['type'])&& ? $this->categoryRepository->haveAdditions() : $this->categoryRepository->notHaveAdditions();
         if (isset($request['type']) && $request['type'] == 'additions') {
-            $categories->where('have_additions', 1)->get();;
+            $categories->where('have_additions', 1)->get();
         } elseif (isset($request['type']) && $request['type'] == 'package') {
             $categories->where('is_package', 1)->get();
         } elseif (!isset($request['type'])) {

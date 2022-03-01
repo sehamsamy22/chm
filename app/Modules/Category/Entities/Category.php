@@ -4,6 +4,8 @@ namespace App\Modules\Category\Entities;
 
 use App\Modules\Category\Database\factories\CategoryFactory;
 use App\Modules\Product\Entities\Product;
+use App\Modules\Product\Entities\PackageCategory;
+
 use App\Modules\Store\Entities\Store;
 use App\Scopes\CategoryStoreScope;
 use App\Scopes\NormalProductScope;
@@ -84,4 +86,11 @@ class Category extends Model
         $additions = $this->hasMany(Product::class, 'category_id')->withoutGlobalScope(NormalProductScope::class)->get();
         return $additions;
     }
+
+//    public function packageItems()
+//    {
+//        $items = $this->hasMany(PackageCategory::class, 'category_id')->withoutGlobalScope(NormalProductScope::class)->get();
+//        return $items;
+//    }
+
 }

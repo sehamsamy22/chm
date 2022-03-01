@@ -21,7 +21,6 @@ class ProductResource extends JsonResource
 
     public function toArray($request)
     {
-             dd($this->packageCategories);
         $user = Auth::guard('api')->user();
         return [
             'id' => $this->id,
@@ -79,8 +78,8 @@ class ProductResource extends JsonResource
                     'created_at' => Carbon::parse($rate->created_at)->format('d-m-Y')
                 ];
             }),
-            'package_categories' => $this->packageCategories->transform(function ($tag) {
-                return $tag->tag ?? '';
+            'package_categories' => $this->packageCategories->transform(function ($category) {
+                return   new CategoryResource($category->category);
             }),
         ];
     }
