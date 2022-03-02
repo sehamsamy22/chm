@@ -26,7 +26,7 @@ class Category extends Model
 
     protected static function booted()
     {
-//        static::addGlobalScope(new CategoryStoreScope());
+      static::addGlobalScope(new CategoryStoreScope());
     }
 
     public function subcategories(): HasMany

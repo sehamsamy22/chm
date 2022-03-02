@@ -79,7 +79,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
+        $product = Product::withoutGlobalScope(NormalProductScope::class)->find($id);
         return $this->apiResponse(new ProductResource($product));
     }
     /**
