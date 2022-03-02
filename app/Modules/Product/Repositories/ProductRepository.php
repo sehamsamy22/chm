@@ -128,7 +128,7 @@ class ProductRepository
     {
         // QFETHING  PRODUCTS
         $products = Product::with(['options', 'category.options', 'lists', 'images', 'comments', 'rates', 'brand'])
-            ->withoutGlobalScope(NormalProductScope::class)->orderBy('id', 'DESC');
+            ->withoutGlobalScope(NormalProductScope::class)->where('type','!=','package_addition')->orderBy('id', 'DESC');
         // APPLY  REQUESTS  FILTER
         //        SEARCH  WORD
         if (isset($params['search_word'])) {

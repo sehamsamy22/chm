@@ -16,7 +16,7 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
-        dd($this->packageItems());
+//        dd($this->products->count());
         return [
             'id' => $this->id,
             'name' => $request->header('Content-language') ? $this->name : $this->getTranslations('name') ?? '',
@@ -33,7 +33,7 @@ class CategoryResource extends JsonResource
                 ];
             }),
             "options" => CategoryOptionResource::collection($this->categoryOptions),
-            "products" => ProductResource::collection($this->packageItems()),
+            "products" => $this->packageItems(),
         ];
     }
 }
