@@ -45,7 +45,7 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $products = Product::whereIn('type',['normal','normal'])->get();
+        $products = Product::whereIn('type',['normal','package_addition'])->get();
         $total = $products->count();
         return $this->apiResponse(['products'=>ProductResource::collection($products->paginate($request['pageLimit'])),
             'total' => $total,
