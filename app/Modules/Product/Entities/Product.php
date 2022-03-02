@@ -130,7 +130,5 @@ class Product extends Model
     {
         return $this->morphMany(Ad::class, 'model');
     }
-
-
-
+    
 }

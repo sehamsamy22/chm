@@ -26,7 +26,7 @@ class Category extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new CategoryStoreScope());
+//        static::addGlobalScope(new CategoryStoreScope());
     }
 
     public function subcategories(): HasMany
@@ -87,10 +87,10 @@ class Category extends Model
         return $additions;
     }
 
-//    public function packageItems()
-//    {
-//        $items = $this->hasMany(PackageCategory::class, 'category_id')->withoutGlobalScope(NormalProductScope::class)->get();
-//        return $items;
-//    }
+    public function packageItems()
+    {
+        $items = $this->hasMany(Product::class, 'category_id')->where('type','package_addition')->withoutGlobalScope(NormalProductScope::class)->get();
+        return $items;
+    }
 
 }
