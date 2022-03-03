@@ -16,7 +16,7 @@ class CategoryResource extends JsonResource
      */
     public function toArray($request)
     {
-//        dd($this->products->count());
+        // dd($this->products->count());
         return [
             'id' => $this->id,
             'name' => $request->header('Content-language') ? $this->name : $this->getTranslations('name') ?? '',
