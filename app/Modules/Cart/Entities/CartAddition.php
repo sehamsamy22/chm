@@ -17,6 +17,7 @@ class BundleProduct extends Model
     }
     public function addition()
     {
+        
         return $this->belongsTo(Product::class, 'addition_id');
     }
 }
