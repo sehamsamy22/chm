@@ -43,7 +43,7 @@ class CategoryController extends Controller
         } elseif (isset($request['type']) && $request['type'] == 'package') {
             $categories->where('is_package', 1)->get();
         } elseif (!isset($request['type'])) {
-            $categories->where('have_additions', 0)->get();;
+            $categories->where('have_additions', 0)->where('is_package', 0)->get();;
         }
         $total = $categories->count();
         return $this->apiResponse(['categories' => CategoryWithAdditionsResource::collection($categories->paginate($request['pageLimit'] ?? $total)),

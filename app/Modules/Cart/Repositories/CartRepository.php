@@ -23,22 +23,22 @@ class CartRepository
 //        dd($data);
         $cart = $this->createCart();
         $products = $this->getItemsData($data['items']);
-        $items = collect($data['items'])->mapWithKeys(function ($item) use ($products) {
+        $items = collect($data['items'])->mapWithKeys(function ($item) use ($products, $cart) {
             $product = $products->where('id', $item['product_id'])->first();
             $price = $product->discount_price ?? $product->price;
+            if(isset($item['additional_products'])){  $productAdditionalPrice = $this->getAdditionalPrice($item['additional_products']);}
+            //TODO store additions
             return [
                 $item['product_id'] => [
                     'quantity' => $item['quantity'],
-                    'price' => $price * $item['quantity']
+                    'price' => (isset($item['additional_products']))?($price * $item['quantity'])+$productAdditionalPrice:$price * $item['quantity'],
                 ]
             ];
         });
-//        dd($cart->items()->get(),$items);
         $cart->items()->sync($items);
         return $cart;
     }
-
-    public function cookiesItems($items,$currency)
+    public function cookiesItems($items, $currency)
     {
         $products = $this->getItemsData($items);
         $newProducts = [];
@@ -51,6 +51,15 @@ class CartRepository
             $newProducts[] = $product;
         }
         return $newProducts;
+    }
+    public function getAdditionalPrice($additions)
+    {
+        $sum = 0;
+        $products = Product::withoutGlobalScope(NormalProductScope::class)->whereIn('id', $additions)->get();
+        foreach ($products as $product) {
+            $sum += $product->price;
+        }
+        return $sum;
     }
 
     public function getItemsData($items)
