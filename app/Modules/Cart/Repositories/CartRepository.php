@@ -26,15 +26,22 @@ class CartRepository
         $items = collect($data['items'])->mapWithKeys(function ($item) use ($products, $cart) {
             $product = $products->where('id', $item['product_id'])->first();
             $price = $product->discount_price ?? $product->price;
-            if(isset($item['additional_products'])){  $productAdditionalPrice = $this->getAdditionalPrice($item['additional_products']);}
-            //TODO store additions
+            if(isset($item['additional_products'])){
+                $productAdditionalPrice = $this->getAdditionalPrice($item['additional_products']);
+                //TODO store additions
+            }
             return [
                 $item['product_id'] => [
                     'quantity' => $item['quantity'],
                     'price' => (isset($item['additional_products']))?($price * $item['quantity'])+$productAdditionalPrice:$price * $item['quantity'],
+                    'additions'=>$item['additional_products']
                 ]
             ];
         });
+
+        foreach ($items as $productId=>$item){
+            $cart->additions()->sync([1,2]);
+        }
         $cart->items()->sync($items);
         return $cart;
     }

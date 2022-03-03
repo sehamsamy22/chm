@@ -167,13 +167,14 @@ class ProductRepository
             $min_price = !isset($params['min_price']) ? 0 : $params['min_price'];
             $products->where('price', '= >', $min_price);
         }
+
 //       if (!$pagination) return $products->get();
 //      if (!isset($params['main_category'])) return $products->get();
 //         OPTIONS  FILTER
         if (empty($products)) return $products->get();
         if (!isset($params['options'])) return $products->get();
-
         $products = $products->get();
+
         foreach ($products as $key => $product) {
             $productValues = $product->values->pluck('id')->toArray();
             foreach ($params['options'] as $option) {

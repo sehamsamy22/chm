@@ -102,12 +102,12 @@ class OrderRepository
     {
         $items = $this->getCartItems($user,false);
         return $items->reduce(function ($carry, $item) {
-            $price = $item->discount_price ?? $item->price;
+            $price = $item->discount_price ?? $item->pivot->price;
             return $carry + ($price * $item->pivot->quantity);
         });
     }
 
-    public function getCartItems($user, $forOrder = true)
+    public function getCartItems($user, $forOrder = false)
     {
         $cart = $this->cartRepository->getUserCart($user);
         if (!$forOrder) return $cart->items;

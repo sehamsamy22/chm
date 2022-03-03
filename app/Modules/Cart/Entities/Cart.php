@@ -40,7 +40,7 @@ class Cart extends Model
 
     public function additions()
     {
-        return $this->belongsToMany(Product::class)
-            ->withPivot('addition_id')->withTimestamps()->withoutGlobalScopes();
+        return $this->hasMany(Product::class,'product_id')
+            ->withoutGlobalScopes();
     }
 }
