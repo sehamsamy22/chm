@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Translatable\HasTranslations;
 
-class BundleProduct extends Model
+class CartAddition extends Model
 {
     use HasFactory;
     protected $fillable = ['product_id','addition_id','cart_id'];
@@ -18,5 +18,9 @@ class BundleProduct extends Model
     public function addition()
     {
         return $this->belongsTo(Product::class, 'addition_id');
+    }
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class, 'cart_id');
     }
 }
