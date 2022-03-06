@@ -52,13 +52,16 @@ class CartRepository
     public function cookiesItems($items, $currency)
     {
         $products = $this->getItemsData($items);
+//        dd($products)
         $newProducts = [];
         foreach ($items as $item) {
+//            dd($items);
             $product = $products->where('id', $item['product_id'])->first();
 //            dd($product['price'],exchangeRate($product['price'],$currency),round(exchangeRate($product['price'],$currency), 2));
+            $product_price_with_additions =$product->price + $this->getAdditionalPrice($item['additional_products']);
             $product = collect($product);
             $product['quantity'] = $item['quantity'];
-//            $product['price'] = $item['price'];
+            $product['price'] =round($product_price_with_additions,2);
             $newProducts[] = $product;
         }
         return $newProducts;
