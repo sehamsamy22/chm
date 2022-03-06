@@ -39,9 +39,9 @@ class CartRepository
             ];
         });
 
-        foreach ($items as $productId=>$item){
-            $cart->additions()->sync([1,2]);
-        }
+//        foreach ($items as $productId=>$item){
+//            $cart->additions()->sync([1,2]);
+//        }
         $cart->items()->sync($items);
         return $cart;
     }
