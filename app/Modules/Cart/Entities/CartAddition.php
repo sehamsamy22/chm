@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Modules\Product\Entities;
+namespace App\Modules\Cart\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\Translatable\HasTranslations;
+use App\Modules\Cart\Entities\Cart;
 
 class CartAddition extends Model
 {

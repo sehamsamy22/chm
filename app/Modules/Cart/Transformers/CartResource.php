@@ -29,6 +29,7 @@ class CartResource extends JsonResource
                     'quantity' => $item->pivot->quantity,
                     'total' => round($item->pivot->price,2),
                     'product' => new ProductResource($item),
+
                 ];
             }),
         ];
