@@ -38,9 +38,5 @@ class Cart extends Model
             ->withPivot('quantity', 'price')->withTimestamps()->withoutGlobalScopes();
     }
 
-    public function additions()
-    {
-        return $this->hasMany(Product::class,'product_id')
-            ->withoutGlobalScopes();
-    }
+   
 }
