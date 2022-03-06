@@ -64,7 +64,9 @@ class ProductRequest extends FormRequest
             'bundle_products' => 'required_if:bundle,==,1|array',
             'bundle_products.*' => 'exists:products,id',
             'package_categories' => 'required_if:is_package,==,1|array',
-            'package_categories.*' => 'exists:categories,id'
+            'package_categories.*' => 'exists:categories,id',
+            'package_min' => 'required|integer|min:1',
+            'package_max' => 'required|integer|min:1',
         ];
     }
 }
