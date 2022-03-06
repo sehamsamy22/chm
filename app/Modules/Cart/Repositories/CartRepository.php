@@ -20,7 +20,6 @@ class CartRepository
     // store  new  instances of model
     public function storeCart($data)
     {
-//        dd($data);
         $cart = $this->createCart();
         $products = $this->getItemsData($data['items']);
         $items = collect($data['items'])->mapWithKeys(function ($item) use ($products, $cart) {
@@ -34,14 +33,10 @@ class CartRepository
                 $item['product_id'] => [
                     'quantity' => $item['quantity'],
                     'price' => (isset($item['additional_products']))?($price * $item['quantity'])+$productAdditionalPrice:$price * $item['quantity'],
-                    'additions'=>$item['additional_products']
+//                    'additions'=> (isset($item['additional_products'])?$item['additional_products']:[],
                 ]
             ];
         });
-
-//        foreach ($items as $productId=>$item){
-//            $cart->additions()->sync([1,2]);
-//        }
         $cart->items()->sync($items);
         return $cart;
     }
