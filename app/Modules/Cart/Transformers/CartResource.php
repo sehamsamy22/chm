@@ -25,10 +25,11 @@ class CartResource extends JsonResource
             'items' => $this->items->transform(function ($item) {
                 return [
                     'id' => $item->id,
-                    'price' =>  $item->pivot->price,
+                    'price' => round($item->pivot->price,2) ,
                     'quantity' => $item->pivot->quantity,
-                    'total' => $item->pivot->price,
+                    'total' => round($item->pivot->price,2),
                     'product' => new ProductResource($item),
+
                 ];
             }),
         ];

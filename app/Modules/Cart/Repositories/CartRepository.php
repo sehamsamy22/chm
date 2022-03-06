@@ -25,35 +25,48 @@ class CartRepository
         $items = collect($data['items'])->mapWithKeys(function ($item) use ($products, $cart) {
             $product = $products->where('id', $item['product_id'])->first();
             $price = $product->discount_price ?? $product->price;
-            if(isset($item['additional_products'])){
+            if (isset($item['additional_products'])) {
                 $productAdditionalPrice = $this->getAdditionalPrice($item['additional_products']);
-                //TODO store additions
+                // store additions
+                foreach ($item['additional_products'] as $additionId) {
+                    $cart->additions()->create([
+                        'addition_id' => $additionId,
+                        'product_id' => $item['product_id']
+                    ]);
+                }
             }
             return [
                 $item['product_id'] => [
                     'quantity' => $item['quantity'],
-                    'price' => (isset($item['additional_products']))?($price * $item['quantity'])+$productAdditionalPrice:$price * $item['quantity'],
-//                    'additions'=> (isset($item['additional_products'])?$item['additional_products']:[],
+                    'price' => (isset($item['additional_products'])) ? ($price * $item['quantity']) + $productAdditionalPrice : $price * $item['quantity'],
+//                  'additions'=> isset($item['additional_products'])?$item['additional_products']:[]
                 ]
             ];
         });
+
+
         $cart->items()->sync($items);
         return $cart;
     }
+
     public function cookiesItems($items, $currency)
     {
         $products = $this->getItemsData($items);
+//        dd($products)
         $newProducts = [];
         foreach ($items as $item) {
+//            dd($items);
             $product = $products->where('id', $item['product_id'])->first();
 //            dd($product['price'],exchangeRate($product['price'],$currency),round(exchangeRate($product['price'],$currency), 2));
+            $product_price_with_additions =$product->price + $this->getAdditionalPrice($item['additional_products']);
             $product = collect($product);
             $product['quantity'] = $item['quantity'];
-//            $product['price'] = $item['price'];
+            $product['price'] =round($product_price_with_additions,2);
             $newProducts[] = $product;
         }
         return $newProducts;
     }
+
     public function getAdditionalPrice($additions)
     {
         $sum = 0;
