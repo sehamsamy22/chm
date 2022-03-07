@@ -42,4 +42,11 @@ class Cart extends Model
     {
         return $this->hasMany(CartAddition::class,'cart_id');
     }
+    public function getItemAdditions($item)
+    {
+        $additions = Product::whereHas('additions', function($q) use($item){
+           $q->where('cart_id',$this->id)->where('product_id',$item->id);
+        })->withoutGlobalScopes()->pluck('id')->toArray();
+        return $additions;
+    }
 }

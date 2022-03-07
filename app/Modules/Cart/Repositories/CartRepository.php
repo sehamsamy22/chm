@@ -39,8 +39,7 @@ class CartRepository
                 $item['product_id'] => [
                     'quantity' => $item['quantity'],
                     'price' => (isset($item['additional_products'])) ? ($price * $item['quantity']) + $productAdditionalPrice : $price * $item['quantity'],
-//                  'additions'=> isset($item['additional_products'])?$item['additional_products']:[]
-                ]
+                ],
             ];
         });
 
