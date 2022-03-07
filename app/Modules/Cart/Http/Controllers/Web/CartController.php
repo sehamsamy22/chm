@@ -33,7 +33,7 @@ class CartController extends Controller
     {
         $currency = $request->header('currency');
         $requestItems=$request->items;
-        $requestItems['price']=
+//        $requestItems['price']=
         $items = $this->CartRepository->cookiesItems($requestItems,$currency);
 
         return $this->apiResponse($items);

@@ -10,6 +10,7 @@ use App\Modules\Category\Entities\Option;
 use App\Modules\Order\Entities\Order;
 use App\Modules\Product\Database\factories\ProductFactory;
 use App\Modules\Store\Entities\Store;
+use App\Modules\Cart\Entities\CartAddition;
 use App\Scopes\HasCategoryScope;
 use App\Scopes\NormalProductScope;
 use App\Scopes\ProductStoreScope;
@@ -131,5 +132,8 @@ class Product extends Model
     {
         return $this->morphMany(Ad::class, 'model');
     }
-    
+    public function additions()
+    {
+        return $this->hasMany(CartAddition::class,'addition_id');
+    }
 }

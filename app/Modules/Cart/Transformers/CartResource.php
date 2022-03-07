@@ -18,6 +18,7 @@ class CartResource extends JsonResource
      */
     public function toArray($request)
     {
+        
         return [
             'id' => $this->id,
             'user' => new UserResource($this->user),
@@ -29,6 +30,7 @@ class CartResource extends JsonResource
                     'quantity' => $item->pivot->quantity,
                     'total' => round($item->pivot->price,2),
                     'product' => new ProductResource($item),
+                    'additions'=> $this->getItemAdditions($item),
 
                 ];
             }),
