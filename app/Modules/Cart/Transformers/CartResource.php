@@ -30,7 +30,7 @@ class CartResource extends JsonResource
                     'quantity' => $item->pivot->quantity,
                     'total' => round($item->pivot->price,2),
                     'product' => new ProductResource($item),
-                    'additions'=> $this->getItemAdditions($item),
+                    'additional_products'=> $this->getItemAdditions($item),
 
                 ];
             }),

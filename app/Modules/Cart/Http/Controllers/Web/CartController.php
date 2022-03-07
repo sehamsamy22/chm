@@ -35,7 +35,6 @@ class CartController extends Controller
         $requestItems=$request->items;
 //        $requestItems['price']=
         $items = $this->CartRepository->cookiesItems($requestItems,$currency);
-
         return $this->apiResponse($items);
     }
 
