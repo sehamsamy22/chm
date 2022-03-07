@@ -110,7 +110,7 @@ class OrderRepository
     public function getCartItems($user, $forOrder = false)
     {
         $cart = $this->cartRepository->getUserCart($user);
-        if (!$forOrder) return $cart->items;
+//        if (!$forOrder) return $cart->items;
         return $cart->items->map(function ($item) {
             return [
                 'product_id' => $item->id,
