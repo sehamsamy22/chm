@@ -15,6 +15,9 @@ class CategoryDetailResource extends JsonResource
      */
     public function toArray($request)
     {
+        dd($this->products()->with('orders')->get()->sortByDesc(function ($product) {
+            return $product->orders->count();
+        })->take(4));
         $products = collect($this->products);
         return [
             'id' => $this->id,
