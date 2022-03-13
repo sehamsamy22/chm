@@ -33,9 +33,9 @@ class CategoryDetailResource extends JsonResource
             }),
             "options" => CategoryOptionResource::collection($this->categoryOptions->unique("option_id")),
 //            "products" => ProductResource::collection($this->products),
-            "moreOrderedProduct" => $this->products()->with('orders')->sortByDesc(function ($product) {
+            "moreOrderedProduct" => $this->products()->with('orders')->get()->sortByDesc(function ($product) {
                 return $product->orders->count();
-            })->take(3)->get(),
+            })->take(3),
             "maxProductPrice" => (!$products->isEmpty()) ? $products->sortBy([['price', 'desc']])->first()->price : 0,
             "minProductPrice" => (!$products->isEmpty()) ? $products->sortBy([['price', 'asc']])->first()->price : 0,
         ];
