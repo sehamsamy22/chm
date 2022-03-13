@@ -35,7 +35,7 @@ class CategoryDetailResource extends JsonResource
 //            "products" => ProductResource::collection($this->products),
             "moreOrderedProduct" => $this->products()->with('orders')->get()->sortByDesc(function ($product) {
                 return $product->orders->count();
-            })->take(3),
+            })->take(3)->flatten(),
             "maxProductPrice" => (!$products->isEmpty()) ? $products->sortBy([['price', 'desc']])->first()->price : 0,
             "minProductPrice" => (!$products->isEmpty()) ? $products->sortBy([['price', 'asc']])->first()->price : 0,
         ];
