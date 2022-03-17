@@ -153,7 +153,7 @@ class ProductController extends Controller
 
         public function services(Request $request)
     {
-        $services = Product::withoutGlobalScope(NormalProductScope::class)->where('type', 'service')->paginate($request['pageLimit']);
+        $services = Product::where('type', 'service')->withoutGlobalScope(NormalProductScope::class)->paginate($request['pageLimit']);
         $total = $services->count();
         return $this->apiResponse([
             "services" => ProductResource::collection($services),
@@ -165,7 +165,7 @@ class ProductController extends Controller
 
     public function additions(Request $request)
     {
-        $additions = Product::withoutGlobalScope(NormalProductScope::class)->where('type', 'additions')->paginate($request['pageLimit']);
+        $additions = Product::where('type', 'additions')->withoutGlobalScope(NormalProductScope::class)->paginate($request['pageLimit']);
         $total = $additions->count();
         return $this->apiResponse([
             "additions" => ProductResource::collection($additions),
