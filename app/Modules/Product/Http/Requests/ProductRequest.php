@@ -65,8 +65,8 @@ class ProductRequest extends FormRequest
             'bundle_products.*' => 'exists:products,id',
             'package_categories' => 'required_if:is_package,==,1|array',
             'package_categories.*' => 'exists:categories,id',
-            'package_min' => 'required_if:type,package_addition|integer|min:1',
-            'package_max' => 'required_if:type,package_addition|integer|min:1',
+            'package_min' => 'required_if:type,==,package_addition|integer|min:1',
+            'package_max' => 'required_if:type,==,package_addition|integer|min:1',
         ];
     }
 }
