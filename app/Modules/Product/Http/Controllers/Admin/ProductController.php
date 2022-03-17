@@ -62,9 +62,9 @@ class ProductController extends Controller
     public function store(ProductRequest $request): JsonResponse
     {
         $category = Category::find($request->category_id);
-        if ($category->parent_id == null) {
-            throw ValidationException::withMessages(['main_category' => "use sub category instead of main category"]);
-        }
+//        if ($category->parent_id == null) {
+//            throw ValidationException::withMessages(['main_category' => "use sub category instead of main category"]);
+//        }
         if ($category->have_additions == 1 & $request->type !='additions') {
             throw ValidationException::withMessages(['type' => "Product type must be additions"]);
         }
