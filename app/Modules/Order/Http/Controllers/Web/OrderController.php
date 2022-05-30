@@ -136,7 +136,7 @@ class OrderController extends Controller
 
             $order = $this->orderRepository->createOrder($transaction->order_details, $transaction->user, Order::PAID, $transaction->id);
 
-            Notification::send(Admin::role('GeneralManager')->get(), new NewOrder($order));
+//            Notification::send(Admin::role('GeneralManager')->get(), new NewOrder($order));
             return redirect(config('app.front_url') . "/payment?status=true&order={$order->unique_id}");
         }
     }
@@ -160,7 +160,7 @@ class OrderController extends Controller
         $data['payment_method_id']=PaymentMethods::paymentId('TELR');
         $order = $this->orderRepository->createOrder($transactionExist->order_details, $transactionExist->user, Order::PAID, $transactionExist->id);
 
-        Notification::send(Admin::role('GeneralManager')->get(), new NewOrder($order));
+//        Notification::send(Admin::role('GeneralManager')->get(), new NewOrder($order));
         return redirect(config('app.front_url') . "/payment?status=true&order={$order->unique_id}");
     }
 
@@ -184,7 +184,7 @@ class OrderController extends Controller
                 'user_id' => $payment['metadata']['user_id']
             ]);
             $order = $this->orderRepository->createOrder($transaction->order_details, $transaction->user, Order::PAID, $transaction->id);
-            Notification::send(Admin::role('GeneralManager')->get(), new NewOrder($order));
+//            Notification::send(Admin::role('GeneralManager')->get(), new NewOrder($order));
             return redirect(config('app.front_url') . "/payment?status=true&order={$order->unique_id}");
         }
     }
