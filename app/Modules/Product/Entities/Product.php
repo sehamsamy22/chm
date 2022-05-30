@@ -37,9 +37,9 @@ class Product extends Model
 //     */
     protected static function booted()
     {
-        static::addGlobalScope(new ProductStoreScope());
-        static::addGlobalScope(new HasCategoryScope ());
-        static::addGlobalScope(new NormalProductScope());
+//        static::addGlobalScope(new ProductStoreScope());
+//        static::addGlobalScope(new HasCategoryScope ());
+//        static::addGlobalScope(new NormalProductScope());
     }
 
 //
