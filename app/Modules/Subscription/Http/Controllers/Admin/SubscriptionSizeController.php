@@ -77,6 +77,6 @@ class SubscriptionSizeController extends Controller
     {
         $wrappingType = SubscriptionSize::findOrFail($id);
         $wrappingType->delete();
-        return $this->apiResponse(SubscriptionSizeResource::collection(WrappingType::all()));
+        return $this->apiResponse(SubscriptionSizeResource::collection(SubscriptionSize::all()));
     }
 }
