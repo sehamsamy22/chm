@@ -3,9 +3,9 @@
 namespace App\Modules\Blog\Repositories;
 
 use App\Modules\Blog\Entities\Blog;
-use App\Modules\Blog\Repositories\BlogRepositoryInterface;
+use App\Modules\Blog\Repositories\WrappingTypeRepositoryInterface;
 
-class BlogRepository implements BlogRepositoryInterface
+class WrappingTypeRepository implements WrappingTypeRepositoryInterface
 {
     // model property on class instances
     protected $blog;
