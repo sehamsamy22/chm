@@ -18,5 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth:admin-api']], function () {
     Route::resource('wrappingTypes', WrappingTypeController::class);
     Route::resource('subscriptionSizes', SubscriptionSizeController::class);
-
+    Route::resource('subscriptionItems', SubscriptionItemController::class);
 });

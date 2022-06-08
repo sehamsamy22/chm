@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SubscriptionSize extends Model
+class SubscriptionItem extends Model
 {
-    use HasFactory, HasTranslations, SoftDeletes;
+    use HasFactory, HasTranslations;
 
     public $translatable = ['name'];
-    protected $softDelete = true;
-    protected $fillable = ['name', 'image','price','store_id'];
+    protected $fillable = ['name', 'image',];
 
 //    public function products()
 //    {
