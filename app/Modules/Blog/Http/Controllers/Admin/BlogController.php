@@ -5,7 +5,7 @@ namespace App\Modules\Blog\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Modules\Blog\Entities\Blog;
 use App\Modules\Blog\Http\Requests\BlogRequest;
-use App\Modules\Blog\Repositories\BlogRepository;
+use App\Modules\Blog\Repositories\WrappingTypeRepository;
 use App\Modules\Blog\Transformers\BlogInfoResource;
 use Illuminate\Http\Response;
 
@@ -17,7 +17,7 @@ class BlogController extends Controller
      */
     private $blogRepository;
 
-    public function __construct(BlogRepository $blogRepository)
+    public function __construct(WrappingTypeRepository $blogRepository)
     {
         $this->blogRepository = $blogRepository;
         $this->middleware('permission:blog-list', ['only' => ['index', 'show']]);

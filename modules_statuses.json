@@ -17,5 +17,6 @@
     "Notification": true,
     "Shipping": true,
     "Warehouse": true,
-    "Store": true
+    "Store": true,
+    "Subscription": true
 }
