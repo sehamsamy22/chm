@@ -58,7 +58,7 @@ class SubscriptionItemController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function update(SubscriptionSizeRequest $request, $id)
+    public function update(SubscriptionItemRequest $request, $id)
     {
         $subscriptionItem = SubscriptionItem::find($id);
         $subscriptionItem->update($request->validated());
