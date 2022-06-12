@@ -7,15 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SubscriptionDeliveryCount extends Model
+class SubscriptionDayCount extends Model
 {
     use HasFactory, HasTranslations;
 
     public $translatable = ['count'];
-    protected $fillable = ['count','type_id'];
+    protected $fillable = ['count'];
 
-    public function type()
-    {
-        return $this->belongsTo(SubscriptionType::class, 'type_id');
-    }
+
 }

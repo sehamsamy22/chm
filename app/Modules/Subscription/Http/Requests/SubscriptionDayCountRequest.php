@@ -4,7 +4,7 @@ namespace App\Modules\Subscription\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SubscriptionDeliveryCountRequest extends FormRequest
+class SubscriptionDayCountRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,6 @@ class SubscriptionDeliveryCountRequest extends FormRequest
             'count' => 'required|array',
             'count.ar' => 'required|string',
             'count.en' => 'required|string',
-            'type_id' => 'nullable|exists:subscription_types,id',
         ];
     }
 }

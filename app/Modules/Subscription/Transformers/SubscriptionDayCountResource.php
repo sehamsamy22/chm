@@ -6,7 +6,7 @@ use App\Modules\Blog\Entities\Blog;
 use App\Modules\Product\Transformers\BrandResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SubscriptionDeliveryCountResource extends JsonResource
+class SubscriptionDayCountResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,7 +20,6 @@ class SubscriptionDeliveryCountResource extends JsonResource
         return [
             'id' => $this->id,
             'count' => $request->header('Content-language') ? $this->count : $this->getTranslations('count'),
-            'type' => new SubscriptionTypeResource($this->type),
 
 
         ];
