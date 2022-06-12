@@ -67,9 +67,9 @@ class SubscriptionDayCountController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function update(SubscriptionDeliveryCountRequest $request, $id)
+    public function update(SubscriptionDayCountRequest $request, $id)
     {
-        $subscriptionDayCount = SubscriptionDeliveryCount::find($id);
+        $subscriptionDayCount = SubscriptionDayCount::find($id);
         $subscriptionDayCount->update($request->validated());
         return $this->apiResponse(new SubscriptionDayCountResource($subscriptionDayCount));
     }
