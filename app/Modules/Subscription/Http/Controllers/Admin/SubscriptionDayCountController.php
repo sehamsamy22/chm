@@ -41,7 +41,7 @@ class SubscriptionDayCountController extends Controller
     public function index()
     {
         $subscriptionDayCounts = $this->subscriptionDayCountRepository->all();
-        return $this->apiResponse((SubscriptionDeliveryCountResource::collection($subscriptionDayCounts)));
+        return $this->apiResponse((SubscriptionDayCountResource::collection($subscriptionDayCounts)));
     }
 
     public function store(SubscriptionDayCountRequest $request)
