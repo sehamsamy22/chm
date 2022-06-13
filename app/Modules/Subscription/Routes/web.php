@@ -1,6 +1,7 @@
 <?php
 namespace App\Modules\Subscription\Http\Controllers\Web;
 
+use App\Modules\Blog\Http\Controllers\Web\BlogController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "api" middleware group. Now create something great!
 |
 */
+Route::get('wrappingTypes', [SubscriptionController::class, 'wrappingTypes']);
+Route::get('sizes', [SubscriptionController::class, 'sizes']);
+Route::get('items', [SubscriptionController::class, 'items']);
 
-Route::group(['middleware' => ['auth:api']], function () {
-    // Route::resource('subscriptions', [SubscriptionController::class])->parameter('', 'subscription_id');
-});
+Route::get('types', [SubscriptionController::class, 'types']);
+Route::get('days', [SubscriptionController::class, 'days']);
+Route::get('deliveries', [SubscriptionController::class, 'deliveries']);
+

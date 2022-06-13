@@ -2,78 +2,60 @@
 
 namespace App\Modules\Subscription\Http\Controllers\Web;
 
-use Illuminate\Contracts\Support\Renderable;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Modules\Subscription\Entities\SubscriptionDayCount;
+use App\Modules\Subscription\Entities\SubscriptionDeliveryCount;
+use App\Modules\Subscription\Entities\SubscriptionItem;
+use App\Modules\Subscription\Entities\SubscriptionSize;
+use App\Modules\Subscription\Entities\SubscriptionType;
+use App\Modules\Subscription\Entities\WrappingType;
+use App\Modules\Subscription\Transformers\SubscriptionDayCountResource;
+use App\Modules\Subscription\Transformers\SubscriptionDeliveryCountResource;
+use App\Modules\Subscription\Transformers\SubscriptionTypeResource;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
+use App\Modules\Subscription\Http\Requests\SubscriptionItemRequest;
+use App\Modules\Subscription\Transformers\SubscriptionItemResource;
+use App\Modules\Subscription\Transformers\SubscriptionSizeResource;
+use App\Modules\Subscription\Transformers\WrappingTypeResource;
+use App\Http\Controllers\Controller;
 
 class SubscriptionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * @return Renderable
-     */
-    public function index()
+
+    public function wrappingTypes()
     {
-        return view('subscription::index');
+        $wrappingTypes = WrappingType::all();
+        return $this->apiResponse(WrappingTypeResource::collection($wrappingTypes));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
+    public function sizes()
     {
-        return view('subscription::create');
+        $sizes = SubscriptionSize::all();
+        return $this->apiResponse(SubscriptionSizeResource::collection($sizes));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
+    public function items()
     {
-        //
+        $items = SubscriptionItem::all();
+        return $this->apiResponse(SubscriptionItemResource::collection($items));
     }
 
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
+    public function types()
     {
-        return view('subscription::show');
+        $types = SubscriptionType::all();
+        return $this->apiResponse(SubscriptionTypeResource::collection($types));
+    }
+    public function days()
+    {
+        $days = SubscriptionDayCount::all();
+        return $this->apiResponse(SubscriptionDayCountResource::collection($days));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
+    public function deliveries()
     {
-        return view('subscription::edit');
+        $deliveries = SubscriptionDeliveryCount::all();
+        return $this->apiResponse(SubscriptionDeliveryCountResource::collection($deliveries));
     }
 
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
