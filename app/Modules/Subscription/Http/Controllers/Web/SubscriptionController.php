@@ -2,9 +2,15 @@
 
 namespace App\Modules\Subscription\Http\Controllers\Web;
 
+use App\Modules\Subscription\Entities\SubscriptionDayCount;
+use App\Modules\Subscription\Entities\SubscriptionDeliveryCount;
 use App\Modules\Subscription\Entities\SubscriptionItem;
 use App\Modules\Subscription\Entities\SubscriptionSize;
+use App\Modules\Subscription\Entities\SubscriptionType;
 use App\Modules\Subscription\Entities\WrappingType;
+use App\Modules\Subscription\Transformers\SubscriptionDayCountResource;
+use App\Modules\Subscription\Transformers\SubscriptionDeliveryCountResource;
+use App\Modules\Subscription\Transformers\SubscriptionTypeResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
@@ -35,7 +41,21 @@ class SubscriptionController extends Controller
         return $this->apiResponse(SubscriptionItemResource::collection($items));
     }
 
+    public function types()
+    {
+        $types = SubscriptionType::all();
+        return $this->apiResponse(SubscriptionTypeResource::collection($types));
+    }
+    public function days()
+    {
+        $days = SubscriptionDayCount::all();
+        return $this->apiResponse(SubscriptionDayCountResource::collection($days));
+    }
 
-
+    public function deliveries()
+    {
+        $deliveries = SubscriptionDeliveryCount::all();
+        return $this->apiResponse(SubscriptionDeliveryCountResource::collection($deliveries));
+    }
 
 }
