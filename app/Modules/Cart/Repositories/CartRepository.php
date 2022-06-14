@@ -6,6 +6,7 @@ use App\Modules\Cart\Entities\CartProduct;
 use App\Modules\Cart\ValidationRules\ProductLimitQuantity;
 use App\Modules\Product\Entities\Product;
 use App\Modules\Product\Transformers\ProductResource;
+use App\Modules\Subscription\Entities\Subscription;
 use App\Scopes\NormalProductScope;
 use App\Services\Validation\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -21,30 +22,38 @@ class CartRepository
     public function storeCart($data)
     {
         $cart = $this->createCart();
-        $products = $this->getItemsData($data['items']);
-        $items = collect($data['items'])->mapWithKeys(function ($item) use ($products, $cart) {
-            $product = $products->where('id', $item['product_id'])->first();
-            $price = $product->discount_price ?? $product->price;
-            if (isset($item['additional_products'])) {
-                $productAdditionalPrice = $this->getAdditionalPrice($item['additional_products']);
-                // store additions
-                foreach ($item['additional_products'] as $additionId) {
-                    $cart->additions()->create([
-                        'addition_id' => $additionId,
-                        'product_id' => $item['product_id']
-                    ]);
+
+        //---------------if subscription----------------------------------
+        if (isset($data['type_id']) & isset($data['time_id']) & isset($data['delivery_id'])) {
+
+
+            $subscription = Subscription::create($data);
+            $cart->subscription_id = $subscription->id;
+        }
+        if (isset($data['items'])) {
+            $products = $this->getItemsData($data['items']);
+            $items = collect($data['items'])->mapWithKeys(function ($item) use ($products, $cart) {
+                $product = $products->where('id', $item['product_id'])->first();
+                $price = $product->discount_price ?? $product->price;
+                if (isset($item['additional_products'])) {
+                    $productAdditionalPrice = $this->getAdditionalPrice($item['additional_products']);
+                    // store additions
+                    foreach ($item['additional_products'] as $additionId) {
+                        $cart->additions()->create([
+                            'addition_id' => $additionId,
+                            'product_id' => $item['product_id']
+                        ]);
+                    }
                 }
-            }
-            return [
-                $item['product_id'] => [
-                    'quantity' => $item['quantity'],
-                    'price' => (isset($item['additional_products'])) ? ($price * $item['quantity']) + $productAdditionalPrice : $price * $item['quantity'],
-                ],
-            ];
-        });
-
-
-        $cart->items()->sync($items);
+                return [
+                    $item['product_id'] => [
+                        'quantity' => $item['quantity'],
+                        'price' => (isset($item['additional_products'])) ? ($price * $item['quantity']) + $productAdditionalPrice : $price * $item['quantity'],
+                    ],
+                ];
+            });
+            $cart->items()->sync($items);
+        }
         return $cart;
     }
 
@@ -57,10 +66,10 @@ class CartRepository
 //            dd($items);
             $product = $products->where('id', $item['product_id'])->first();
 //            dd($product['price'],exchangeRate($product['price'],$currency),round(exchangeRate($product['price'],$currency), 2));
-            $product_price_with_additions =$product->price + $this->getAdditionalPrice($item['additional_products']);
+            $product_price_with_additions = $product->price + $this->getAdditionalPrice($item['additional_products']);
             $product = collect($product);
             $product['quantity'] = $item['quantity'];
-            $product['price'] =round($product_price_with_additions,2);
+            $product['price'] = round($product_price_with_additions, 2);
             $newProducts[] = $product;
         }
         return $newProducts;

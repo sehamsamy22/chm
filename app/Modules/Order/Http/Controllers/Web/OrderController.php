@@ -140,7 +140,7 @@ class OrderController extends Controller
             return redirect(config('app.front_url') . "/payment?status=true&order={$order->unique_id}");
         }
     }
-       public function telrDeclinedCallback(Request $request)
+    public function telrDeclinedCallback(Request $request)
     {
         $transactionExist = Transaction::where('payment_reference', $request->cart_id)->first();
         $transactionExist->update([

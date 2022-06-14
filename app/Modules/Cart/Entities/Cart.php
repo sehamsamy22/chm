@@ -15,7 +15,7 @@ class Cart extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'ordered_at', 'order_id', 'store_id'];
+    protected $fillable = ['user_id', 'ordered_at', 'order_id', 'store_id','subscription_id'];
 
     protected static function booted()
     {
