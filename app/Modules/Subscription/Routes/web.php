@@ -21,4 +21,5 @@ Route::get('items', [SubscriptionController::class, 'items']);
 Route::get('types', [SubscriptionController::class, 'types']);
 Route::get('days', [SubscriptionController::class, 'days']);
 Route::get('deliveries', [SubscriptionController::class, 'deliveries']);
+Route::post('subscriptions', [SubscriptionController::class, 'subscriptions']);
 
