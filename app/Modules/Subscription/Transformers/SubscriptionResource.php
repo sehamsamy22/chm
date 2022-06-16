@@ -15,15 +15,17 @@ class SubscriptionResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return [
             'id' => $this->id,
-            'type' => new SubscriptionTypeResource($this->type),
-            'size' => new SubscriptionSizeResource($this->size),
+            'type' => $this->type,
+            'subscriptionType' => new SubscriptionTypeResource($this->subscriptionType),
+            'size' =>optional( new SubscriptionSizeResource($this->size)),
             'delivery' => new SubscriptionDeliveryCountResource($this->delivery),
             'wrappingType' => new WrappingTypeResource($this->wrappingType),
             'dayCount' => new SubscriptionDayCountResource($this->dayCount),
             'pickupTime' => $this->time_id,
+            'normalSubscription' => new NormalSubscriptionResource($this->normalSubscription),
+
         ];
     }
 }

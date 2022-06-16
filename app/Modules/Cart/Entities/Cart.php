@@ -5,6 +5,7 @@ namespace App\Modules\Cart\Entities;
 use App\Models\User;
 use App\Modules\Product\Entities\Product;
 use App\Modules\Store\Entities\Store;
+use App\Modules\Subscription\Entities\Subscription;
 use App\Scopes\CartStoreScope;
 use App\Scopes\StoreScope;
 use Illuminate\Database\Eloquent\Model;
@@ -27,11 +28,14 @@ class Cart extends Model
         return $this->belongsTo(Store::class, 'store_id');
     }
 
+    public function subscription()
+    {
+        return $this->belongsTo(Subscription::class, 'subscription_id');
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
     public function items()
     {
         return $this->belongsToMany(Product::class)
