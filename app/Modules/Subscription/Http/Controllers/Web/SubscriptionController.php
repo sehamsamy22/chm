@@ -76,6 +76,11 @@ class SubscriptionController extends Controller
         $normalSubscriptions = NormalSubscription::all();
         return $this->apiResponse(NormalSubscriptionResource::collection($normalSubscriptions));
     }
+    public function normalSubscription($id)
+    {
+        $normalSubscription = NormalSubscription::find($id);
+        return $this->apiResponse(new NormalSubscriptionResource($normalSubscription));
+    }
 
     public function subscriptions(SubscriptionRequest $request)
     {
