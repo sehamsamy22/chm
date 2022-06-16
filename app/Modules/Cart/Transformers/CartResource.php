@@ -6,6 +6,7 @@ use App\Http\Resources\Customer\UserResource;
 use App\Modules\Payment\Entities\PaymentMethod;
 use App\Modules\Payment\Transformers\PaymentResource;
 use App\Modules\Product\Transformers\ProductResource;
+use App\Modules\Subscription\Transformers\SubscriptionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CartResource extends JsonResource
@@ -18,7 +19,7 @@ class CartResource extends JsonResource
      */
     public function toArray($request)
     {
-        
+//        dd($this->subscription);
         return [
             'id' => $this->id,
             'user' => new UserResource($this->user),
@@ -34,6 +35,8 @@ class CartResource extends JsonResource
 
                 ];
             }),
+            'subscription' => new SubscriptionResource($this->subscription),
+
         ];
     }
 }

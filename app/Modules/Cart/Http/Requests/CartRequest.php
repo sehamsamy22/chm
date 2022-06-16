@@ -32,7 +32,7 @@ class CartRequest extends FormRequest
             'wrapping_type_id' => 'nullable|exists:wrapping_types,id',
             'day_count_id' => 'nullable|exists:subscription_day_counts,id',
             'time_id' => 'nullable|exists:pickup_times,id',
-
+             'normal_subscription_id' => 'nullable|exists:normal_subscriptions,id',
             'items' => 'nullable|array',
 //            'items.*.quantity' => 'required|max:',
             'items.*.product_id' => 'nullable|exists:products,id',

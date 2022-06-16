@@ -12,9 +12,9 @@ class Subscription extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['price', 'size_id', 'type_id', 'delivery_id', 'wrapping_type_id', 'day_count_id', 'time_id',];
+    protected $fillable = ['price', 'size_id', 'type_id', 'delivery_id', 'wrapping_type_id', 'day_count_id', 'time_id','type','normal_subscription_id','store_id'];
 
-    public function type()
+    public function subscriptionType()
     {
         return $this->belongsTo(SubscriptionType::class, 'type_id');
     }
@@ -40,5 +40,9 @@ class Subscription extends Model
     public function time()
     {
         return $this->belongsTo(PickupTime::class, 'time_id');
+    }
+    public function normalSubscription()
+    {
+        return $this->belongsTo(NormalSubscription::class, 'normal_subscription_id');
     }
 }
