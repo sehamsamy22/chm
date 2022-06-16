@@ -23,5 +23,6 @@ Route::group(['middleware' => ['auth:admin-api']], function () {
     Route::resource('subscriptionDeliveryCounts', SubscriptionDeliveryCountController::class);
     Route::resource('subscriptionDayCounts', SubscriptionDayCountController::class);
     Route::resource('subscriptions', SubscriptionController::class);
+    Route::resource('careInstructions', CareInstructionController::class);
 
 });
