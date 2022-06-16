@@ -2,6 +2,7 @@
 namespace App\Modules\Subscription\Http\Controllers\Admin;
 
 use App\Modules\Subscription\Http\Controllers\Admin\WrappingTypeController;
+use App\Modules\Subscription\Http\Controllers\Web\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,5 +25,5 @@ Route::group(['middleware' => ['auth:admin-api']], function () {
     Route::resource('subscriptionDayCounts', SubscriptionDayCountController::class);
     Route::resource('subscriptions', SubscriptionController::class);
     Route::resource('careInstructions', CareInstructionController::class);
-
+    Route::resource('normalSubscriptions', NormalSubscriptionController::class);
 });

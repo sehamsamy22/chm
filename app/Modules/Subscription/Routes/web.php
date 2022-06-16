@@ -24,4 +24,6 @@ Route::get('days', [SubscriptionController::class, 'days']);
 Route::get('deliveries', [SubscriptionController::class, 'deliveries']);
 Route::post('subscriptions', [SubscriptionController::class, 'subscriptions']);
 Route::get('careInstructions', [SubscriptionController::class, 'careInstructions']);
+Route::get('normalSubscriptions', [SubscriptionController::class, 'normalSubscriptions']);
+Route::get('normalSubscriptions/{id}', [SubscriptionController::class, 'normalSubscription']);
 
