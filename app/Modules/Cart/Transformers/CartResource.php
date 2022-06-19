@@ -36,7 +36,14 @@ class CartResource extends JsonResource
                 ];
             }),
             'subscription' => new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription),
+            'subscriptionItems' => $this->subscriptionItems->transform(function ($subscriptionitem) use ($request) {
+                return [
+                    'id' => $subscriptionitem->id,
+                    'name' => $request->header('Content-language') ? $subscriptionitem->item->name : $subscriptionitem->item->getTranslations('name'),
+                    'image' => $subscriptionitem->item->image,
 
+                ];
+            }),
         ];
     }
 }

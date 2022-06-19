@@ -29,6 +29,11 @@ class CartRepository
                 "type"=>$data['type'],
                 "subscription_id" =>$data['subscription_id'],
             ]);
+            foreach ($data['subscription_items'] as $item) {
+                $cart->subscriptionItems()->create([
+                    'item_id' => $item,
+                ]);
+            }
         }
         //---------------if products ----------------------------------
         if (isset($data['items'])) {
