@@ -5,7 +5,9 @@ namespace App\Modules\Cart\Entities;
 use App\Models\User;
 use App\Modules\Product\Entities\Product;
 use App\Modules\Store\Entities\Store;
+use App\Modules\Subscription\Entities\NormalSubscription;
 use App\Modules\Subscription\Entities\Subscription;
+use App\Modules\Subscription\Entities\SubscriptionSize;
 use App\Scopes\CartStoreScope;
 use App\Scopes\StoreScope;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +18,7 @@ class Cart extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['user_id', 'ordered_at', 'order_id', 'store_id','subscription_id'];
+    protected $fillable = ['user_id', 'ordered_at', 'order_id', 'store_id','subscription_id','type'];
 
     protected static function booted()
     {
@@ -28,9 +30,13 @@ class Cart extends Model
         return $this->belongsTo(Store::class, 'store_id');
     }
 
-    public function subscription()
+    public function normalSubscription()
     {
-        return $this->belongsTo(Subscription::class, 'subscription_id');
+        return $this->belongsTo(NormalSubscription::class, 'subscription_id');
+    }
+    public function customSubscription()
+    {
+        return $this->belongsTo(SubscriptionSize::class, 'subscription_id');
     }
     public function user()
     {

@@ -35,6 +35,12 @@ class OrderRequest extends FormRequest
             'gift_url' => 'sometimes|url',
             'shipping_method_id' => 'sometimes|exists:shipping_methods,id',
 //          'store_id' => 'nullable|exists:stores,id',
+            'size_id' => 'nullable|exists:subscription_sizes,id',
+            'type_id' => 'nullable|exists:subscription_types,id',
+            'delivery_id' => 'nullable|exists:subscription_delivery_counts,id',
+            'wrapping_type_id' => 'nullable|exists:wrapping_types,id',
+            'day_count_id' => 'nullable|exists:subscription_day_counts,id',
+            'time_id' => 'nullable|exists:pickup_times,id',
         ];
     }
 }

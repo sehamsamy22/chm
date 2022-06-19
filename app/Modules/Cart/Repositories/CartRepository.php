@@ -22,21 +22,15 @@ class CartRepository
     public function storeCart($data)
     {
         $cart = $this->createCart();
-        //---------------if subscription is custom----------------------------------
-        if (isset($data['size_id'] ) && isset($data['type_id']) && isset($data['time_id']) && isset($data['delivery_id']) ) {
+        //---------------if subscription ----------------------------------
+        if (isset($data['subscription_id'] ) && isset($data['type'])) {
             $cart->items()->detach();
-            $subscription = Subscription::create($data);
-            $subscription->update(["price" => $subscription->size->price]);
-            $cart->update(["subscription_id" => $subscription->id]);
+            $cart->update([
+                "type"=>$data['type'],
+                "subscription_id" =>$data['subscription_id'],
+            ]);
         }
-        //---------------if subscription is normal----------------------------------
-        if (isset($data['type_id']) && isset($data['time_id']) && isset($data['delivery_id']) && isset($data['normal_subscription_id'])) {
-            $cart->items()->detach();
-            $data['type']= 'normal';
-            $subscription = Subscription::create($data);
-            $subscription->update(["price" => $subscription->normalSubscription->price]);
-            $cart->update(["subscription_id" => $subscription->id]);
-        }
+        //---------------if products ----------------------------------
         if (isset($data['items'])) {
             $products = $this->getItemsData($data['items']);
             $items = collect($data['items'])->mapWithKeys(function ($item) use ($products, $cart) {

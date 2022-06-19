@@ -19,7 +19,7 @@ class NormalSubscriptionResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'title' => $request->header('Content-language') ? $this->title : $this->getTranslations('title'),
+            'name' => $request->header('Content-language') ? $this->title : $this->getTranslations('name'),
             'description' => $request->header('Content-language') ? $this->description : $this->getTranslations('description'),
             'price' => $this->price,
             'image' => $this->image,

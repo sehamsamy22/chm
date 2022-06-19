@@ -35,7 +35,7 @@ class CartResource extends JsonResource
 
                 ];
             }),
-            'subscription' => new SubscriptionResource($this->subscription),
+            'subscription' => new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription),
 
         ];
     }
