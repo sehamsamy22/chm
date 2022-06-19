@@ -6,6 +6,7 @@ use App\Modules\Address\Transformers\AddressResource;
 use App\Modules\Cart\Transformers\CartResource;
 use App\Modules\Order\Transformers\OrderResource;
 use App\Modules\Product\Transformers\ProductResource;
+use App\Modules\Subscription\Transformers\SubscriptionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class FullUserDetailsResource extends JsonResource
@@ -18,6 +19,7 @@ class FullUserDetailsResource extends JsonResource
      */
     public function toArray($request)
     {
+//        dd( $this->cart);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -41,14 +43,21 @@ class FullUserDetailsResource extends JsonResource
                     'product' => new ProductResource($product),
                 ];
             }),
-            'cart' => $this->cart? optional(new CartResource($this->cart))->items->transform(function ($item) {
-                return [
-                    'id' => $item->id,
-                    'price' => $item->pivot->price,
-                    'quantity' => $item->pivot->quantity,
-                    'product' => new ProductResource($item),
-                ];
-            }):[],
+            'cart' =>
+                $this->cart
+                ?
+                $this->cart->items
+                    ?
+                    optional(new CartResource($this->cart))->items->transform(function ($item) {
+                    return [
+                        'id' => $item->id,
+                        'price' => $item->pivot->price,
+                        'quantity' => $item->pivot->quantity,
+                        'product' => new ProductResource($item),
+                    ];
+                })
+                    :new SubscriptionResource(($this->cart->type=='custom')?$this->cart->customSubscription:$this->cart->normalSubscription)
+             :[],
             'token' => $this->token,
         ];
     }
