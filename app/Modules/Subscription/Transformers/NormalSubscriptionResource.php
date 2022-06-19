@@ -16,10 +16,9 @@ class NormalSubscriptionResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return [
             'id' => $this->id,
-            'name' => $request->header('Content-language') ? $this->title : $this->getTranslations('name'),
+            'name' => $request->header('Content-language') ? $this->name : $this->getTranslations('name'),
             'description' => $request->header('Content-language') ? $this->description : $this->getTranslations('description'),
             'price' => $this->price,
             'image' => $this->image,
