@@ -30,6 +30,7 @@ class CartRequest extends FormRequest
              'subscription_id' => 'nullable',
             'type' => 'sometimes|in:custom,normal',
             'items' => 'nullable|array',
+            'subscription_items' => 'nullable|array',
 //            'items.*.quantity' => 'required|max:',
             'items.*.product_id' => 'nullable|exists:products,id',
         ];

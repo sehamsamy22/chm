@@ -50,7 +50,7 @@ class Cart extends Model
 
     public function additions()
     {
-        return $this->hasMany(CartAddition::class,'cart_id');
+        return $this->belongsToMany(CartAddition::class,'cart_id');
     }
     public function getItemAdditions($item)
     {
@@ -58,5 +58,9 @@ class Cart extends Model
            $q->where('cart_id',$this->id)->where('product_id',$item->id);
         })->withoutGlobalScopes()->pluck('id')->toArray();
         return $additions;
+    }
+    public function subscriptionItems()
+    {
+        return $this->hasMany(CartSubscriptionItem::class,'cart_id');
     }
 }

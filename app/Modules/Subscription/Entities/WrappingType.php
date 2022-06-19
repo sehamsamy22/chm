@@ -16,8 +16,5 @@ class WrappingType extends Model
     protected $softDelete = true;
     protected $fillable = ['name', 'image'];
 
-//    public function products()
-//    {
-//        return $this->hasMany(Product::class, 'brand_id');
-//    }
+
 }
