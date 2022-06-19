@@ -24,9 +24,9 @@ class NormalSubscriptionRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|array',
-            'title.ar' => 'required|string',
-            'title.en' => 'required|string',
+            'name' => 'required|array',
+            'name.ar' => 'required|string',
+            'name.en' => 'required|string',
             'description' => 'required|array',
             'description.ar' => 'required|string',
             'description.en' => 'required|string',

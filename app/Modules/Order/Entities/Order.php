@@ -7,6 +7,11 @@ use App\Modules\Address\Entities\Address;
 use App\Modules\Payment\Entities\PaymentMethod;
 use App\Modules\Product\Entities\Product;
 use App\Modules\Store\Entities\Store;
+use App\Modules\Subscription\Entities\SubscriptionDayCount;
+use App\Modules\Subscription\Entities\SubscriptionDeliveryCount;
+use App\Modules\Subscription\Entities\SubscriptionSize;
+use App\Modules\Subscription\Entities\SubscriptionType;
+use App\Modules\Subscription\Entities\WrappingType;
 use App\Scopes\OrderStoreScope;
 use App\Scopes\StoreScope;
 use App\Traits\helperTrait;
@@ -30,7 +35,7 @@ class Order extends Model
     use SoftDeletes, helperTrait;
 
     protected $fillable = ['user_id', 'address_id', 'method_id', 'status', 'total', 'unique_id',
-    'amount', 'store_id','transaction_id','notes','pickup_date','time_id','received_name','gift_url'];
+    'amount', 'store_id','transaction_id','notes','pickup_date','time_id','received_name','gift_url', 'type_id', 'delivery_id', 'day_count_id',];
 
     protected static function booted()
     {
@@ -83,5 +88,26 @@ class Order extends Model
     public function invoice()
     {
         return $this->hasOne(OrderInvoice::class);
+    }
+
+    public function subscriptionType()
+    {
+        return $this->belongsTo(SubscriptionType::class, 'type_id');
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(SubscriptionSize::class, 'size_id');
+    }
+
+    public function delivery()
+    {
+        return $this->belongsTo(SubscriptionDeliveryCount::class, 'delivery_id');
+    }
+
+
+    public function dayCount()
+    {
+        return $this->belongsTo(SubscriptionDayCount::class, 'day_count_id');
     }
 }

@@ -14,8 +14,9 @@ class AddSubscriptionIdToCartsTable extends Migration
     public function up()
     {
         Schema::table('carts', function (Blueprint $table) {
+            $table->enum('type',['custom','normal']);
             $table->unsignedBigInteger('subscription_id')->nullable();
-            $table->foreign('subscription_id')->on('subscriptions')->references('id')->onDelete('cascade');
+//            $table->foreign('normal_subscription_id')->on('normal_subscriptions')->references('id')->onDelete('cascade');
         });
     }
 
@@ -27,8 +28,9 @@ class AddSubscriptionIdToCartsTable extends Migration
     public function down()
     {
         Schema::table('carts', function (Blueprint $table) {
-            $table->dropForeign(['subscription_id']);
             $table->dropColumn('subscription_id');
+            $table->dropColumn('type');
+
         });
     }
 }

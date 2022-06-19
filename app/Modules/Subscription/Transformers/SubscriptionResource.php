@@ -17,15 +17,9 @@ class SubscriptionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => $this->type,
-            'subscriptionType' => new SubscriptionTypeResource($this->subscriptionType),
-            'size' =>optional( new SubscriptionSizeResource($this->size)),
-            'delivery' => new SubscriptionDeliveryCountResource($this->delivery),
-            'wrappingType' => new WrappingTypeResource($this->wrappingType),
-            'dayCount' => new SubscriptionDayCountResource($this->dayCount),
-            'pickupTime' => $this->time_id,
-            'normalSubscription' => new NormalSubscriptionResource($this->normalSubscription),
-
+            'name' => $request->header('Content-language') ? $this->name : $this->getTranslations('name'),
+            'image' => $this->image,
+            'price' => $this->price,
         ];
     }
 }

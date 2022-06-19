@@ -11,8 +11,8 @@ class NormalSubscription extends Model
 {
     use HasFactory, HasTranslations;
 
-    public $translatable = ['description','title'];
-    protected $fillable = ['description','title','price','image'];
+    public $translatable = ['description','name'];
+    protected $fillable = ['description','name','price','image'];
 
 
 }

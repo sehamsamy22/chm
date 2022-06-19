@@ -15,7 +15,7 @@ class CreateNormalSubscriptionsTable extends Migration
     {
         Schema::create('normal_subscriptions', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
+            $table->text('name');
             $table->text('description');
             $table->string('image');
             $table->string('price');
