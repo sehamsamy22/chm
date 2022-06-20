@@ -40,6 +40,11 @@ class CartRepository
         }
         //---------------if products ----------------------------------
         if (isset($data['items'])) {
+                $cart->update([
+                    "type" => "items",
+                    "subscription_id" => null
+                ]);
+                $cart->subscriptionItems()->delete();
             $products = $this->getItemsData($data['items']);
             $items = collect($data['items'])->mapWithKeys(function ($item) use ($products, $cart) {
                 $product = $products->where('id', $item['product_id'])->first();
