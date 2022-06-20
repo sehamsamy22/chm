@@ -24,7 +24,7 @@ class CartResource extends JsonResource
             'id' => $this->id,
             'user' => new UserResource($this->user),
             'payment_methods' => PaymentResource::collection(PaymentMethod::all()),
-            'items' => $this->items->transform(function ($item) {
+            'items' =>($this->type=='items')? $this->items->transform(function ($item) {
                 return [
                     'id' => $item->id,
                     'price' => round($item->pivot->price,2) ,
@@ -34,7 +34,7 @@ class CartResource extends JsonResource
                     'additional_products'=> $this->getItemAdditions($item),
 
                 ];
-            }),
+            }):[ new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription)],
             'subscription' => new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription),
             'subscriptionItems' => $this->subscriptionItems->transform(function ($subscriptionitem) use ($request) {
                 return [

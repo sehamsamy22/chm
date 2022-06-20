@@ -101,6 +101,7 @@ class CartRepository
 
     public function getItemsData($items)
     {
+        dd("oi");
         $productsIds = array_column($items, 'product_id');
         $products = Product::withoutGlobalScope(NormalProductScope::class)->find($productsIds);
         return ProductResource::collection($products);
