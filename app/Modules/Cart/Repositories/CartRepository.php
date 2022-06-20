@@ -24,13 +24,13 @@ class CartRepository
         $cart = $this->createCart();
         //---------------if subscription ----------------------------------
         if (isset($data['subscription_id']) && isset($data['type'])) {
+
             $cart->items()->detach();
             $cart->update([
                 "type" => $data['type'],
                 "subscription_id" => $data['subscription_id'],
             ]);
-            if (isset($item['subscription_items'])) {
-
+            if (isset($data['subscription_items'])) {
                 foreach ($data['subscription_items'] as $item) {
                     $cart->subscriptionItems()->create([
                         'item_id' => $item,
@@ -40,6 +40,11 @@ class CartRepository
         }
         //---------------if products ----------------------------------
         if (isset($data['items'])) {
+                $cart->update([
+                    "type" => "items",
+                    "subscription_id" => null
+                ]);
+                $cart->subscriptionItems()->delete();
             $products = $this->getItemsData($data['items']);
             $items = collect($data['items'])->mapWithKeys(function ($item) use ($products, $cart) {
                 $product = $products->where('id', $item['product_id'])->first();
