@@ -24,13 +24,13 @@ class CartRepository
         $cart = $this->createCart();
         //---------------if subscription ----------------------------------
         if (isset($data['subscription_id']) && isset($data['type'])) {
+
             $cart->items()->detach();
             $cart->update([
                 "type" => $data['type'],
                 "subscription_id" => $data['subscription_id'],
             ]);
-            if (isset($item['subscription_items'])) {
-
+            if (isset($data['subscription_items'])) {
                 foreach ($data['subscription_items'] as $item) {
                     $cart->subscriptionItems()->create([
                         'item_id' => $item,
