@@ -19,7 +19,6 @@ class FullUserDetailsResource extends JsonResource
      */
     public function toArray($request)
     {
-//        dd( $this->cart);
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -46,17 +45,17 @@ class FullUserDetailsResource extends JsonResource
             'cart' =>
                 $this->cart
                 ?
-                $this->cart->items
+                    $this->cart->items->isEmpty()
                     ?
-                    optional(new CartResource($this->cart))->items->transform(function ($item) {
-                    return [
-                        'id' => $item->id,
-                        'price' => $item->pivot->price,
-                        'quantity' => $item->pivot->quantity,
-                        'product' => new ProductResource($item),
-                    ];
-                })
-                    :new SubscriptionResource(($this->cart->type=='custom')?$this->cart->customSubscription:$this->cart->normalSubscription)
+                    [new SubscriptionResource(($this->cart->type=='custom')?$this->cart->customSubscription:$this->cart->normalSubscription)]
+                        : optional(new CartResource($this->cart))->items->transform(function ($item) {
+                        return [
+                            'id' => $item->id,
+                            'price' => $item->pivot->price,
+                            'quantity' => $item->pivot->quantity,
+                            'product' => new ProductResource($item),
+                        ];
+                    })
              :[],
             'token' => $this->token,
         ];
