@@ -32,8 +32,8 @@ class CartController extends Controller
     public function getCookiesItems(CartRequest $request)
     {
         $currency = $request->header('currency');
-        $requestItems=$request->items;
-        $items = $this->CartRepository->cookiesItems($requestItems,$currency);
+        $requests=$request->all();
+        $items = $this->CartRepository->cookiesItems($requests,$currency,);
         return $this->apiResponse($items);
     }
 
