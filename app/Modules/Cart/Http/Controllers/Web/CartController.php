@@ -48,8 +48,16 @@ class CartController extends Controller
 
     public function deleteItem($id)
     {
-        $cart = $this->CartRepository->delete($id);
-        return $this->apiResponse(new CartResource($cart));
+        $cart =Auth::user()->cart();
+        if ($cart->type=='items'){
+            $newCart = $this->CartRepository->delete($id);
+        }  else{
+            $cart->update([
+                'subscription_id'=>null
+            ]);
+            $newCart =$cart;
+        }
+        return $this->apiResponse(new CartResource($newCart));
     }
 
     public function deleteCart()

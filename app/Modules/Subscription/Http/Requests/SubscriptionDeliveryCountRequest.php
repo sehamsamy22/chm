@@ -24,9 +24,7 @@ class SubscriptionDeliveryCountRequest extends FormRequest
     public function rules()
     {
         return [
-            'count' => 'required|array',
-            'count.ar' => 'required|string',
-            'count.en' => 'required|string',
+            'count' => 'required',
             'type_id' => 'nullable|exists:subscription_types,id',
         ];
     }

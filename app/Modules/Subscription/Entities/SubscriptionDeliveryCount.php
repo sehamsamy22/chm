@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubscriptionDeliveryCount extends Model
 {
-    use HasFactory, HasTranslations;
+    use HasFactory;
 
-    public $translatable = ['count'];
     protected $fillable = ['count','type_id'];
 
     public function type()
