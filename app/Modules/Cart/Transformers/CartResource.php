@@ -22,6 +22,8 @@ class CartResource extends JsonResource
 //        dd($this->subscription);
         return [
             'id' => $this->id,
+            'type' => $this->type,
+
             'user' => new UserResource($this->user),
             'payment_methods' => PaymentResource::collection(PaymentMethod::all()),
             'items' =>($this->type=='items')? $this->items->transform(function ($item) {
