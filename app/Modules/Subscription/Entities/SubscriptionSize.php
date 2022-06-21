@@ -13,7 +13,7 @@ class SubscriptionSize extends Model
 
     public $translatable = ['name'];
     protected $softDelete = true;
-    protected $fillable = ['name', 'image','price','store_id'];
+    protected $fillable = ['name', 'image','price','store_id','type'];
 
 //    public function products()
 //    {
