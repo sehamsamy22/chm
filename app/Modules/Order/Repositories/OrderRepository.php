@@ -142,6 +142,8 @@ class OrderRepository
         $data['method_id'] = $data['payment_method_id'];
         $data['transaction_id'] = $transaction_id;
         $data['amount'] = $this->calculateOrderProductsTotal($user);
+        $data['type']=$user->cart->type;
+        $data['subscription_id']=$user->cart->subscription_id;
         $order = $user->orders()->create($data);
         $cartItems = $this->getCartItems($user);
         $order->products()->attach($cartItems);
