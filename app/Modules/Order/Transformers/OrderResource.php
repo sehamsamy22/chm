@@ -44,7 +44,14 @@ class OrderResource extends JsonResource
             }),
             'type'=>$this->type,
             'subscription' => ($this->type!='items')?[new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription)]:[],
+            'subscriptionItems' => $this->subscriptionItems->transform(function ($subscriptionitem) use ($request) {
+                return [
+                    'id' => $subscriptionitem->id,
+                    'name' => $request->header('Content-language') ? $subscriptionitem->item->name : $subscriptionitem->item->getTranslations('name'),
+                    'image' => $subscriptionitem->item->image,
 
+                ];
+            }),
             'payment_method' => new PaymentResource($this->method),
             'user' => new UserResource($this->user),
             'address' => new  AddressResource($this->address),

@@ -147,6 +147,14 @@ class OrderRepository
         $order = $user->orders()->create($data);
         $cartItems = $this->getCartItems($user);
         $order->products()->attach($cartItems);
+        if ($user->cart->type=='custom'){
+            foreach ($user->cart->subscriptionItems as $item) {
+//                dd($item);
+                $order->subscriptionItems()->create([
+                    'item_id' => $item->item_id,
+                ]);
+            }
+        }
         $this->changeOrderStatus($order, $status ?? Order::PENDING);
         $this->updateProductStock($order);
         $this->createOrderInvoice($order, $data['total']);

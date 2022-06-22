@@ -4,6 +4,7 @@ namespace App\Modules\Order\Entities;
 
 use App\Models\User;
 use App\Modules\Address\Entities\Address;
+use App\Modules\Cart\Entities\CartSubscriptionItem;
 use App\Modules\Payment\Entities\PaymentMethod;
 use App\Modules\Product\Entities\Product;
 use App\Modules\Store\Entities\Store;
@@ -118,5 +119,9 @@ class Order extends Model
     public function customSubscription()
     {
         return $this->belongsTo(SubscriptionSize::class, 'subscription_id');
+    }
+    public function subscriptionItems()
+    {
+        return $this->hasMany(OrderSubscriptionItem::class,'order_id');
     }
 }
