@@ -42,6 +42,7 @@ class OrderResource extends JsonResource
                     'product' => new ProductResource($item),
                 ];
             }),
+            'type'=>$this->type,
             'subscription' => [new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription)],
 
             'payment_method' => new PaymentResource($this->method),
