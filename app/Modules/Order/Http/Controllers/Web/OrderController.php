@@ -156,6 +156,7 @@ class OrderController extends Controller
         $transactionExist->update([
             'status' => 'paid'
         ]);
+
         $data=$transactionExist->order_details;
         $data['payment_method_id']=PaymentMethods::paymentId('TELR');
         $order = $this->orderRepository->createOrder($transactionExist->order_details, $transactionExist->user, Order::PAID, $transactionExist->id);

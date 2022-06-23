@@ -82,7 +82,7 @@ class OrderRepository
         $validator->addRules([
             new CartExists($user),
             new ProductStocks($user->cart),
-            new serviceOrder($request,$user->cart)
+            new serviceOrder($request, $user->cart)
 
         ]);
         return $validator;
@@ -100,17 +100,22 @@ class OrderRepository
 
     public function calculateOrderProductsTotal($user)
     {
-        $items = $this->getCartItems($user,false);
-        return $items->reduce(function ($carry, $item) {
-            $price = $item->discount_price ?? $item->pivot->price;
-            return $carry + ($price * $item->pivot->quantity);
-        });
+        $cart = $this->cartRepository->getUserCart($user);
+        if ($cart->type=='normal') return $cart->normalSubscription->price;
+        if ($cart->type=='custom') return $cart->customSubscription->price;
+            $items = $this->getCartItems($user, false);
+            return $items->reduce(function ($carry, $item) {
+                $price = $item->discount_price ?? $item->pivot->price;
+                return $carry + ($price * $item->pivot->quantity);
+            });
+
+
     }
 
     public function getCartItems($user, $forOrder = false)
     {
         $cart = $this->cartRepository->getUserCart($user);
-       if (!$forOrder) return $cart->items;
+        if (!$forOrder) return $cart->items;
         return $cart->items->map(function ($item) {
             return [
                 'product_id' => $item->id,
@@ -128,18 +133,28 @@ class OrderRepository
         return getsetting('generalShippingPrice');
     }
 
-    public function createOrder($data, $user, $status = null,$transaction_id = null)
+    public function createOrder($data, $user, $status = null, $transaction_id = null)
     {
-       // dd($data, $user, $status = null,$transaction_id);
+        // dd($data, $user, $status = null,$transaction_id);
         // TODO separate next line to calculateOrderTotal()
         // TODO area for creation online payment methods
         $data['unique_id'] = Order::getRandomUniqueIdForModel();
         $data['method_id'] = $data['payment_method_id'];
         $data['transaction_id'] = $transaction_id;
         $data['amount'] = $this->calculateOrderProductsTotal($user);
+        $data['type']=$user->cart->type;
+        $data['subscription_id']=$user->cart->subscription_id;
         $order = $user->orders()->create($data);
         $cartItems = $this->getCartItems($user);
         $order->products()->attach($cartItems);
+        if ($user->cart->type=='custom'){
+            foreach ($user->cart->subscriptionItems as $item) {
+//                dd($item);
+                $order->subscriptionItems()->create([
+                    'item_id' => $item->item_id,
+                ]);
+            }
+        }
         $this->changeOrderStatus($order, $status ?? Order::PENDING);
         $this->updateProductStock($order);
         $this->createOrderInvoice($order, $data['total']);

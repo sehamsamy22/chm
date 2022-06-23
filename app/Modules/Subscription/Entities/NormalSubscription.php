@@ -12,7 +12,7 @@ class NormalSubscription extends Model
     use HasFactory, HasTranslations;
 
     public $translatable = ['description','name'];
-    protected $fillable = ['description','name','price','image'];
+    protected $fillable = ['description','name','price','image','type'];
 
 
 }

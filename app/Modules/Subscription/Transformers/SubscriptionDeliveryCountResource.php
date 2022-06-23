@@ -19,7 +19,7 @@ class SubscriptionDeliveryCountResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'count' => $request->header('Content-language') ? $this->count : $this->getTranslations('count'),
+            'count' => $this->count ,
             'type' => new SubscriptionTypeResource($this->type),
 
 

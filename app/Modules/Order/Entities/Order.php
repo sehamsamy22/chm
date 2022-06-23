@@ -4,9 +4,11 @@ namespace App\Modules\Order\Entities;
 
 use App\Models\User;
 use App\Modules\Address\Entities\Address;
+use App\Modules\Cart\Entities\CartSubscriptionItem;
 use App\Modules\Payment\Entities\PaymentMethod;
 use App\Modules\Product\Entities\Product;
 use App\Modules\Store\Entities\Store;
+use App\Modules\Subscription\Entities\NormalSubscription;
 use App\Modules\Subscription\Entities\SubscriptionDayCount;
 use App\Modules\Subscription\Entities\SubscriptionDeliveryCount;
 use App\Modules\Subscription\Entities\SubscriptionSize;
@@ -35,7 +37,7 @@ class Order extends Model
     use SoftDeletes, helperTrait;
 
     protected $fillable = ['user_id', 'address_id', 'method_id', 'status', 'total', 'unique_id',
-    'amount', 'store_id','transaction_id','notes','pickup_date','time_id','received_name','gift_url', 'type_id', 'delivery_id', 'day_count_id',];
+    'amount', 'store_id','transaction_id','notes','pickup_date','time_id','received_name','gift_url', 'type_id', 'delivery_id', 'day_count_id','type','subscription_id'];
 
     protected static function booted()
     {
@@ -109,5 +111,17 @@ class Order extends Model
     public function dayCount()
     {
         return $this->belongsTo(SubscriptionDayCount::class, 'day_count_id');
+    }
+    public function normalSubscription()
+    {
+        return $this->belongsTo(NormalSubscription::class, 'subscription_id');
+    }
+    public function customSubscription()
+    {
+        return $this->belongsTo(SubscriptionSize::class, 'subscription_id');
+    }
+    public function subscriptionItems()
+    {
+        return $this->hasMany(OrderSubscriptionItem::class,'order_id');
     }
 }

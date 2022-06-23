@@ -6,6 +6,7 @@ use App\Http\Resources\Customer\UserResource;
 use App\Modules\Address\Transformers\AddressResource;
 use App\Modules\Payment\Transformers\PaymentResource;
 use App\Modules\Product\Transformers\ProductResource;
+use App\Modules\Subscription\Transformers\SubscriptionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -39,6 +40,16 @@ class OrderResource extends JsonResource
                     'quantity' => $item->pivot->quantity,
                     'price' => $item->pivot->price,
                     'product' => new ProductResource($item),
+                ];
+            }),
+            'type'=>$this->type,
+            'subscription' => ($this->type!='items')?[new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription)]:[],
+            'subscriptionItems' => $this->subscriptionItems->transform(function ($subscriptionitem) use ($request) {
+                return [
+                    'id' => $subscriptionitem->id,
+                    'name' => $request->header('Content-language') ? $subscriptionitem->item->name : $subscriptionitem->item->getTranslations('name'),
+                    'image' => $subscriptionitem->item->image,
+
                 ];
             }),
             'payment_method' => new PaymentResource($this->method),

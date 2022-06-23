@@ -20,6 +20,7 @@ class SubscriptionResource extends JsonResource
             'name' => $request->header('Content-language') ? $this->name : $this->getTranslations('name'),
             'image' => $this->image,
             'price' => $this->price,
+            "type"=>$this->type,
         ];
     }
 }
