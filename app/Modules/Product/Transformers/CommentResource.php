@@ -2,6 +2,7 @@
 
 namespace App\Modules\Product\Transformers;
 
+use App\Http\Resources\Customer\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommentResource extends JsonResource
@@ -16,7 +17,7 @@ class CommentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => $this->user(),
+            'user' => new UserResource($this->user_id),
             'comment' => $this->pivot->comment,
         ];
     }

@@ -65,7 +65,7 @@ class ProductController extends Controller
         $product->comments()->attach($user, [
             'comment' => $validated['comment'],
         ]);
-        return $this->apiResponse(new RateResource($product->comments->last()));
+        return $this->apiResponse(new RateResource($product->comments));
     }
 
     public function storeRate(Request $request)
