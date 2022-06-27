@@ -19,6 +19,9 @@ class ProductTypeService implements RulesInterface
 
     public function validate()
     {
+        if (!Auth::user()->cart) {
+            return new ValidationError("Your cart is empty ", 423);
+        }
         $cart = Auth::user()->cart;
         $product =Product::withoutGlobalScope(NormalProductScope::class)->find($this->item['product_id']);
         if ($product->type=='service' && count($cart->items)!=0){
