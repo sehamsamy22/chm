@@ -19,17 +19,17 @@ class ProductTypeService implements RulesInterface
 
     public function validate()
     {
-        if (!Auth::user()->cart) {
-            return new ValidationError("Your cart is empty ", 423);
-        }
+
         $cart = Auth::user()->cart;
-        $product =Product::withoutGlobalScope(NormalProductScope::class)->find($this->item['product_id']);
-        if ($product->type=='service' && count($cart->items)!=0){
-            return new ValidationError("sorry,please empty your cart first", 423);
-        }
-        if ($product->type!='service' && count($cart->items)!=0){
-            foreach ($cart->items as $item){
-                if($item->type=='service') return new ValidationError("sorry,you cart have service product checkout before", 423);
+        if ($cart) {
+            $product = Product::withoutGlobalScope(NormalProductScope::class)->find($this->item['product_id']);
+            if ($product->type == 'service' && count($cart->items) != 0) {
+                return new ValidationError("sorry,please empty your cart first", 423);
+            }
+            if ($product->type != 'service' && count($cart->items) != 0) {
+                foreach ($cart->items as $item) {
+                    if ($item->type == 'service') return new ValidationError("sorry,you cart have service product checkout before", 423);
+                }
             }
         }
     }
