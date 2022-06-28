@@ -50,7 +50,7 @@ class Cart extends Model
 
     public function additions()
     {
-        return $this->belongsToMany(CartAddition::class,'cart_id');
+        return $this->belongsToMany(CartAddition::class,'cart_additions');
     }
     public function getItemAdditions($item)
     {
