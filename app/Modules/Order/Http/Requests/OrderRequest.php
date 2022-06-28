@@ -42,6 +42,7 @@ class OrderRequest extends FormRequest
             'day_count_id' => 'nullable|exists:subscription_day_counts,id',
             'time_id' => 'nullable|exists:pickup_times,id',
             'massage' => 'nullable',
+            'service_product_details' => 'nullable',
         ];
     }
 }

@@ -29,6 +29,7 @@ class OrderResource extends JsonResource
             'received_name' => $this->received_name,
             'gift_url' => $this->gift_url,
             'massage' =>$this->massage,
+            'service_product_details' =>$this->service_product_details,
             'status_history' => $this->history->transform(function ($item) {
                 return
                     $item->status;
