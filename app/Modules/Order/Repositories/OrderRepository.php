@@ -12,6 +12,7 @@ use App\Modules\Order\ValidationRules\ProductStocks;
 use App\Modules\Order\ValidationRules\serviceOrder;
 use App\Modules\Payment\Entities\PaymentMethod;
 use App\Modules\Payment\Entities\ShippingMethod;
+use App\Modules\Subscription\Entities\SubscriptionDeliveryCount;
 use App\Services\Validation\Validator;
 
 class OrderRepository
@@ -95,6 +96,8 @@ class OrderRepository
             $data['total'] -= $this->orderInvoiceFees['couponDiscount']['cost'] = $data['coupon_discount'];
         }
         // $data['total'] += $this->orderInvoiceFees['shippingCost']['cost'] = $this->getShippingPrice($data['address_id']);
+        $data['total'] =isset($data['delivery_id'])? $this->calculateOrderProductsTotal($user) * SubscriptionDeliveryCount::find($data['delivery_id'])->count :$this->calculateOrderProductsTotal($user);
+
         return $data['total'];
     }
 
@@ -141,7 +144,7 @@ class OrderRepository
         $data['unique_id'] = Order::getRandomUniqueIdForModel();
         $data['method_id'] = $data['payment_method_id'];
         $data['transaction_id'] = $transaction_id;
-        $data['amount'] = $this->calculateOrderProductsTotal($user);
+        $data['amount'] =isset($data['delivery_id'])? $this->calculateOrderProductsTotal($user) * SubscriptionDeliveryCount::find($data['delivery_id'])->count :$this->calculateOrderProductsTotal($user);
         $data['type']=$user->cart->type;
         $data['subscription_id']=$user->cart->subscription_id;
         $order = $user->orders()->create($data);

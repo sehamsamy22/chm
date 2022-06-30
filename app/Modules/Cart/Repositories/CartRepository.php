@@ -4,6 +4,7 @@ use App\Modules\Cart\Entities\Cart;
 use App\Modules\Cart\Entities\CartItem;
 use App\Modules\Cart\Entities\CartProduct;
 use App\Modules\Cart\ValidationRules\ProductLimitQuantity;
+use App\Modules\Cart\ValidationRules\ProductTypeService;
 use App\Modules\Product\Entities\Product;
 use App\Modules\Product\Transformers\ProductResource;
 use App\Modules\Subscription\Entities\NormalSubscription;
@@ -139,7 +140,7 @@ class CartRepository
         $validator = new Validator();
         foreach ($items as $item) {
             $validator->addRules([
-                new ProductLimitQuantity($item),
+                new ProductTypeService($item),
             ]);
         }
 

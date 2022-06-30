@@ -40,8 +40,10 @@ class CartController extends Controller
     public function store(CartRequest $request)
     {
         $requests = $request->validated();
-//        $validations = $this->CartRepository->validations($request['items'])->validate()->first();
-//        if ($validations) return $this->errorResponse($validations->getMessage(), [], 422);
+        if (isset($request['items'])) {
+            $validations = $this->CartRepository->validations($request['items'])->validate()->first();
+            if ($validations) return $this->errorResponse($validations->getMessage(), [], 422);
+        }
         $cart = $this->CartRepository->storeCart($requests);
         return $this->apiResponse(new CartResource($cart));
     }
