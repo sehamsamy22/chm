@@ -50,7 +50,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
 
             EnsureFrontendRequestsAreStateful::class,
-            'throttle:1000,1',
+            'throttle:10000,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
