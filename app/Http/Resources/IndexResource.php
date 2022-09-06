@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Modules\Ad\Transformers\AdResource;
 use App\Modules\Address\Transformers\CountryResource;
 use App\Modules\Category\Transformers\CategoryResource;
+use App\Modules\Product\Transformers\ProductCollection;
 use App\Modules\Product\Transformers\ProductResource;
 use App\Modules\Setting\Transformers\SettingResource;
 use App\Modules\Store\Transformers\StoreResource;
@@ -33,8 +34,8 @@ class IndexResource extends JsonResource
             'mid_right' => AdResource::collection(collect($this['ads'])->where('location_id', 4)),
             'footer' => AdResource::collection(collect($this['ads'])->where('location_id', 2)),
             'categories' => CategoryResource::collection($this['categories']),
-            'moreOrderedProduct' => ProductResource::collection($this['moreOrderedProduct']),
-            'moreCommentedProduct' => ProductResource::collection($this['moreCommentedProduct']),
+            'moreOrderedProduct' => ProductCollection::collection($this['moreOrderedProduct']),
+            'moreCommentedProduct' => ProductCollection::collection($this['moreCommentedProduct']),
 
         ];
     }

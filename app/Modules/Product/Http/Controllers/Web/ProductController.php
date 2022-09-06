@@ -36,7 +36,7 @@ class ProductController extends Controller
         ]);
         $products = $this->productRepository->filterProducts($request->all());
         $total = $products->count();
-        $category = isset($request->main_category) ? Category::find($request->main_category) : null;
+        $category = isset($request->main_category) ? Category::where('id',$request->main_category)->with(['subcategories','products'])->first() : null;
         return $this->apiResponse([
             'category' => ($category) ? new CategoryDetailResource($category) : null,
             'products' => ProductResource::collection($products->paginate($request['page_limit'] ?? 12)),

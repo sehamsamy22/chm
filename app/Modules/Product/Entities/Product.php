@@ -25,7 +25,7 @@ class Product extends Model
 
     protected $fillable = ['name', 'description', 'SKU', 'price', 'discount_price', 'discount_start_date', 'discount_end_date', 'image', 'stock', 'deactivated_at', 'deactivation_notes', 'max_per_order'
         , 'digit', 'category_id', 'creator_id', 'bundle', 'store_id', 'type', 'time_period', 'brand_id','is_package' ,'package_min',
-    'package_max',
+        'package_max',
     ];
 
     public $translatable = ['name', 'description'];
@@ -80,7 +80,8 @@ class Product extends Model
 
     public function options()
     {
-        return $this->belongsToMany(Option::class, 'product_option_value', 'product_id', 'option_id')->withPivot('value', 'color_id')->withTimestamps();
+        return $this->belongsToMany(Option::class, 'product_option_value', 'product_id', 'option_id')
+            ->withPivot('value', 'color_id')->withTimestamps();
     }
 
     public function values()

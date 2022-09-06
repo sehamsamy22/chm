@@ -13,11 +13,11 @@ class CategoryOption extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id')->with('categoryOptions');
     }
 
     public function option()
     {
-        return $this->belongsTo(Option::class, 'option_id');
+        return $this->belongsTo(Option::class, 'option_id')->with('values');
     }
 }
