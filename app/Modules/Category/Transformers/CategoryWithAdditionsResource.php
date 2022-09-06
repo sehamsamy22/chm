@@ -3,6 +3,7 @@
 namespace App\Modules\Category\Transformers;
 
 use App\Modules\Product\Transformers\ProductResource;
+use App\Scopes\NormalProductScope;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,7 +17,6 @@ class CategoryWithAdditionsResource extends JsonResource
      */
     public function toArray($request)
     {
-//        dd($this);
         return [
             'id' => $this->id,
             'name' => $request->header('Content-language') ? $this->name : $this->getTranslations('name'),
@@ -29,7 +29,7 @@ class CategoryWithAdditionsResource extends JsonResource
                     "options" => CategoryOptionResource::collection($subcategory->categoryOptions),
                 ];
             }),
-           "options" => CategoryOptionResource::collection($this->categoryOptions),
+            "options" => CategoryOptionResource::collection($this->categoryOptions),
             "products" => ProductResource::collection($this->additions()),
 
         ];

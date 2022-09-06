@@ -15,7 +15,6 @@ class CategoryOptionResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return [
 //            'id' => $this->id,
 //          'category' => $request->header('Content-language') ? $this->category->name : $this->category->getTranslations('name'),
@@ -25,8 +24,8 @@ class CategoryOptionResource extends JsonResource
             'values' =>(isset($this->option->values))? $this->option->values->map(function ($value) use($request){
                 return [
                     'id' => $value->id,
-                    "value" => $value->value ?? $value->color->color,
-                   'color_name' =>$request->header('Content-language') ?  optional($value->color)->name: optional($value->color)->getTranslations('name'),
+                    "value" => ($this->option->input_type=='color') ? $value->color->color: $value->value,
+                    'color_name' =>($this->option->input_type=='color')?$request->header('Content-language') ?  optional($value->color)->name: optional($value->color)->getTranslations('name'):'',
                 ];
             }) :[],
         ];

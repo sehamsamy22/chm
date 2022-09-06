@@ -13,6 +13,7 @@ use App\Modules\Blog\Entities\Blog;
 use App\Modules\Category\Entities\Category;
 use App\Modules\Page\Entities\Page;
 use App\Modules\Product\Entities\Product;
+use App\Modules\Product\Transformers\ProductCollection;
 use App\Modules\Product\Transformers\ProductResource;
 use App\Modules\Setting\Entities\Setting;
 use Illuminate\Support\Facades\Http;
@@ -28,22 +29,18 @@ class HomeController extends Controller
         $socialSettings = Setting::where('module', 'social')->get();
         $footerLinks= Setting::whereIn('name', ['footerLinks'])->first();
 
-        $countries = Country::all();
+        $countries = Country::select(['id', 'name', 'flag'])->with('stores')->get();
         $ads = Ad::all();
-        $moreOrderedProduct = Product::with('orders')->get()->sortByDesc(function ($product) {
-            return $product->orders->count();
-        })->take(8);
-        $moreCommentedProduct = Product::with('comments')->get()->sortByDesc(function ($product) {
-            return $product->comments->count();
-        })->take(8);
-        $categories = Category::whereNull('parent_id')->get()->take(5);
+        $moreOrderedProduct = Product::select(['id', 'name', 'price', 'image'])->withCount('orders')->orderBy('orders_count', 'DESC')->get()->take(8);
+        $moreCommentedProduct = Product::select(['id', 'name', 'price', 'image'])->withCount('comments')->orderBy('comments_count', 'DESC')->get()->take(8);
+        $categories = Category::whereNull('parent_id')->with('subcategories','options','products')->get()->take(5);
         $blogs = Blog::get()->take(4);
         $data = [
             'app_settings' => $appSettings,
             'social_settings' => $socialSettings,
             'ads' => $ads,
-            'moreOrderedProduct' => ProductResource::collection($moreOrderedProduct),
-            'moreCommentedProduct' => ProductResource::collection($moreCommentedProduct),
+            'moreOrderedProduct' => ProductCollection::collection($moreOrderedProduct),
+            'moreCommentedProduct' => ProductCollection::collection($moreCommentedProduct),
             'categories' => $categories,
             'countries' => $countries,
             'blogs' => $blogs,

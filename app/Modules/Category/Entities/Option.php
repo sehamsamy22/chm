@@ -17,7 +17,7 @@ class Option extends Model
     protected $fillable = ['name', 'input_type'];
     public function values()
     {
-        return $this->hasMany(ProductOptionValue::class, 'option_id');
+        return $this->hasMany(ProductOptionValue::class, 'option_id')->with('color');
     }
 
 

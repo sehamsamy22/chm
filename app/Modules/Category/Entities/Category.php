@@ -23,15 +23,16 @@ class Category extends Model
     public $translatable = ['name'];
     protected $softDelete = true;
     protected $fillable = ['name', 'image', 'parent_id', 'store_id', 'have_additions','is_package'];
+    protected $attributes=['additions'];
 
     protected static function booted()
     {
-      static::addGlobalScope(new CategoryStoreScope());
+        static::addGlobalScope(new CategoryStoreScope());
     }
 
     public function subcategories(): HasMany
     {
-        return $this->hasMany(self::class, 'parent_id');
+        return $this->hasMany(self::class, 'parent_id')->with('categoryOptions');
     }
 
     protected static function newFactory()
@@ -63,12 +64,12 @@ class Category extends Model
 
     public function options()
     {
-        return $this->belongsToMany(Option::class);
+        return $this->belongsToMany(Option::class)->with('values');
     }
 
     public function categoryOptions()
     {
-        return $this->hasMany(CategoryOption::class, 'category_id');
+        return $this->hasMany(CategoryOption::class, 'category_id')->with('option.values');
     }
 
     public function scopeHaveAdditions($query)
@@ -83,13 +84,12 @@ class Category extends Model
 
     public function additions()
     {
-        $additions = $this->hasMany(Product::class, 'category_id')->withoutGlobalScope(NormalProductScope::class)->get();
-        return $additions;
+        return $this->products()->withoutGlobalScope(NormalProductScope::class)->with(['bundles','brand','wishes','rates','tags','options','images','packageCategories'])->get();
     }
 
     public function packageItems()
     {
-        $items = $this->hasMany(Product::class, 'category_id')->where('type','package_addition')->withoutGlobalScope(NormalProductScope::class)->get();
+        $items = $this->hasMany(Product::class, 'category_id')->where('type','package_addition')->withoutGlobalScope(NormalProductScope::class)->with('category')->get();
         return $items;
     }
 
