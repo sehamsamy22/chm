@@ -18,7 +18,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = PaymentMethod::all();
+        $payments = PaymentMethod::with(['credentials'])->get();
         return $this->apiResponse(PaymentResource::collection($payments));
     }
 

@@ -19,7 +19,7 @@ class CartRepository
 {
     public function getUserCart($user)
     {
-        return $user->cart;
+        return $user->cart->with(["user.addresses.area.city.country",'user.addresses.area.city','items']);
     }
 
     // store  new  instances of model
@@ -128,12 +128,14 @@ class CartRepository
 
     public function createCart()
     {
-        return Cart::updateOrcreate([
+        $cart= Cart::with(["user.addresses.area.city.country",'user.addresses.area.city','items'])->updateOrcreate([
             'store_id' => app('Illuminate\Http\Request')->header('store_id'),
             'user_id' => auth()->id(),
             'ordered_at' => null
         ]);
+        return $cart;
     }
+
 
     public function validations($items)
     {

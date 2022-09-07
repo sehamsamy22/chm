@@ -84,7 +84,7 @@ class Category extends Model
 
     public function additions()
     {
-        return $this->products()->withoutGlobalScope(NormalProductScope::class)->with(['bundles','brand','wishes','rates','tags','options','images','packageCategories'])->get();
+        return $this->products()->withoutGlobalScope(NormalProductScope::class)->with(['bundles','brand','wishes','rates','tags','options','images','packageCategories','category','store.country.currency'])->get();
     }
 
     public function packageItems()
