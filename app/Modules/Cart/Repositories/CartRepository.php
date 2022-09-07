@@ -19,7 +19,7 @@ class CartRepository
 {
     public function getUserCart($user)
     {
-        return $user->cart->with(["user.addresses.area.city.country",'user.addresses.area.city','items']);
+        return $user->cart;
     }
 
     // store  new  instances of model

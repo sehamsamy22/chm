@@ -34,7 +34,7 @@ class   AddressController extends Controller
 
     public function index()
     {
-        $addresses = Address::where('user_id', auth()->user()->id)->get();
+        $addresses = Address::where('user_id', auth()->user()->id)->with(['area','area.city','area.city.country','user'])->get();
         return $this->apiResponse(AddressResource::collection($addresses));
     }
 
