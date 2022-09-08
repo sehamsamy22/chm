@@ -22,7 +22,7 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         $user = Auth::guard('api')->user();
-//        dd($this->options);
+//   dd($request->header('Content-language') ? $this->category->name : $this->category->getTranslations('name'));
         return [
             'id' => $this->id,
             'name' => $request->header('Content-language') ? $this->name : $this->getTranslations('name'),
@@ -46,7 +46,7 @@ class ProductResource extends JsonResource
             'time_period' => $this->time_period,
             'bundle' => $this->bundle,
             'store_currency' => $this->store->country->currency->code  ?? '',
-            'category' =>$request->header('Content-language') ? $this->category->name : $this->category->getTranslations('name'),
+            'category' => new CategoryResource($this->category),
             'brand' => new BrandResource($this->brand),
             'bundle_products' => $this->bundle == 1 ? $this->bundles->transform(function ($product) {
                 return new ProductResource(Product::find($product->product_id));
