@@ -20,10 +20,9 @@ class Category extends Model
 {
     use HasFactory, HasTranslations, SoftDeletes;
 
-    public $translatable = ['name'];
     protected $softDelete = true;
     protected $fillable = ['name', 'image', 'parent_id', 'store_id', 'have_additions','is_package'];
-    protected $attributes=['additions'];
+    public $translatable = ['name'];
 
     protected static function booted()
     {

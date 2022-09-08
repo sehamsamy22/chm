@@ -19,13 +19,12 @@ class CartResource extends JsonResource
      */
     public function toArray($request)
     {
-//        dd($this->subscription);
         return [
             'id' => $this->id,
             'type' => $this->type,
 
             'user' => new UserResource($this->user),
-            'payment_methods' => PaymentResource::collection(PaymentMethod::all()),
+            'payment_methods' => PaymentResource::collection(PaymentMethod::with(['credentials'])->get()),
             'items' =>($this->type=='items')? $this->items->transform(function ($item) {
                 return [
                     'id' => $item->id,
@@ -34,7 +33,6 @@ class CartResource extends JsonResource
                     'total' => round($item->pivot->price,2),
                     'product' => new ProductResource($item),
                     'additional_products'=> $this->getItemAdditions($item),
-
                 ];
             }):[ new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription)],
             'subscription' => new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription),
