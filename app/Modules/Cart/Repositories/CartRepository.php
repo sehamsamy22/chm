@@ -70,7 +70,9 @@ class CartRepository
                     ],
                 ];
             });
-            $cart->items()->sync($items);
+                        // dd($cart->items(),$items);
+
+            $cart->items()->attach($items);
         }
         return $cart;
     }
