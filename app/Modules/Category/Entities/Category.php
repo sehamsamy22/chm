@@ -53,7 +53,7 @@ class Category extends Model
     {
         return $this->hasManyThrough(
             Product::class,
-            self::class,
+            Category::class,
             'parent_id', // Foreign key on the products table...
             'category_id', // Foreign key on the categories table...
             'id', // Local key on the projects table...
@@ -83,7 +83,8 @@ class Category extends Model
 
     public function additions()
     {
-        return $this->products()->withoutGlobalScope(NormalProductScope::class)->with(['bundles','brand','wishes','rates','tags','options','images','packageCategories','category','store.country.currency'])->get();
+      
+        return $this->hasMany(Product::class, 'category_id');
     }
 
     public function packageItems()
