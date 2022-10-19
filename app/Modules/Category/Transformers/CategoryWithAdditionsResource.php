@@ -30,7 +30,7 @@ class CategoryWithAdditionsResource extends JsonResource
                 ];
             }),
             "options" => CategoryOptionResource::collection($this->categoryOptions),
-            "products" => ProductResource::collection($this->additions()),
+            "products" => ProductResource::collection($this->additions),
 
         ];
     }

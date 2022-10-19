@@ -16,8 +16,9 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
-        $categories = isset($request['type']) ? Category::haveAdditions(): Category::notHaveAdditions();
+        $categories = isset($request['type']) ? Category::where('have_additions', 1): Category::where('have_additions', 0);
         $categories=$categories->with(["subcategories.categoryOptions.option.values.color","products.rates","categoryOptions"])->where('is_package',0)->get();
+     
         return $this->apiResponse(CategoryWithAdditionsResource::collection($categories));
     }
 
