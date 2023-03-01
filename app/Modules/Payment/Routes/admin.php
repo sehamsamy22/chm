@@ -16,5 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:admin-api']], function () {
   Route::resource("payments", PaymentController::class)->parameter('', 'payment_id');
-  Route::post("payments/{payment_id}/status", [PaymentController::class, 'activeToggle']);
+  Route::get("payments/{payment_id}/status", [PaymentController::class, 'activeToggle']);
 });

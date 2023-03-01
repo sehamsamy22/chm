@@ -8,7 +8,6 @@
         "php": "^7.3|^8.0",
         "ext-curl": "*",
         "ext-soap": "*",
-        "akaunting/laravel-money": "^1.2",
         "ashallendesign/laravel-exchange-rates": "^4.1",
         "cartalyst/stripe-laravel": "^13.0",
         "doctrine/dbal": "^2.10",
