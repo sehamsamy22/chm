@@ -18,7 +18,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = PaymentMethod::with(['credentials'])->get();
+        $payments = PaymentMethod::with(['credentials'])->whereNull('deactivated_at')->get();
         return $this->apiResponse(PaymentResource::collection($payments));
     }
 
