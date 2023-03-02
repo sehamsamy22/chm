@@ -405,7 +405,7 @@ class CreateTelrRequest extends AbstractTelrRequest implements Arrayable
         $url = url($url);
         $query = parse_url($url, PHP_URL_QUERY);
 
-        return $url .= ($query ? '&' : '?')."cart_id={$orderId}";
+        return $url .= ($query ? '&' : '?')."order_id={$orderId}";
     }
 
     /**
