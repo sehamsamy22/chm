@@ -23,25 +23,27 @@ class Telr extends PaymentContract
 //        dd($request, Auth::user());
         $order = OrderRepository::createOrder($request, Auth::user());
         $telrManager = new TelrManager();
-        // $billingParams = [
-        //     'first_name' => 'chm',
-        //     'sur_name' => 'market',
-        //     'address_1' => 'Gnaklis',
-        //     'address_2' => 'Gnaklis 2',
-        //     'city' => 'Alexandria',
-        //     'region' => 'San Stefano',
-        //     'zip' => '11231',
-        //     'country' => 'EG',
-        //     'email' => 'sehamsamy755@gmail.com',
-        // ];
-        $telrRequest = $telrManager->prepareCreateRequest($order->id, $order->total, 'order desc', []);
+        $addesses=Auth::user()->addresses;
+        //  dd(Auth::user()->phone);
+        $billingParams = [
+            'first_name' => Auth::user()->name,
+            'sur_name' => 'chm',
+            'address_1' => $addesses[0]->address,
+            'address_2' =>$addesses[1]->address,
+            'city' => $order->address->area->city->name??'',
+            'country' => 'SA',
+            'email' => Auth::user()->email,
+           'phone'=>Auth::user()->phone
+        ];
+        $telrRequest = $telrManager->prepareCreateRequest($order->id, $order->total, 'order desc',  $billingParams);
    //  dd($telrRequest);
-        return $telrManager->pay($order->id, $order->total, 'order desc', [])->redirect();
+        return $telrManager->pay($order->id, $order->total, 'order desc',   $billingParams)->redirect();
     }
 
     public function payCallBack($request)
     {
-        $payment_id = $request['cart_id'];
+        // dd($request);
+        $payment_id = $request['order_id'];
 
     }
 

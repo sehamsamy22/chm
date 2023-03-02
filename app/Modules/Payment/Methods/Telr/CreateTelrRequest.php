@@ -124,7 +124,7 @@ class CreateTelrRequest extends AbstractTelrRequest implements Arrayable
      */
     public function getSuccessURL()
     {
-        return $this->appendOrderIdToURL(config('telr.create.return_auth'), $this->getCartId());
+        return $this->appendOrderIdToURL(config('telr.create.return_auth'), $this->getOrderId());
     }
 
     /**
@@ -309,6 +309,29 @@ class CreateTelrRequest extends AbstractTelrRequest implements Arrayable
         return $this;
     }
 
+    
+  /**
+     * @return mixed
+     */
+    public function getBillingPhone()
+    {
+        return data_get($this->data, 'bill_phone', null);
+    }
+
+    /**
+     * @param $zip
+     * @return $this
+     */
+    public function setBillingPhone($phone)
+    {
+        $this->data['bill_phone'] = $phone;
+
+        return $this;
+    }
+
+
+
+
     /**
      * @return mixed
      */
@@ -382,7 +405,7 @@ class CreateTelrRequest extends AbstractTelrRequest implements Arrayable
         $url = url($url);
         $query = parse_url($url, PHP_URL_QUERY);
 
-        return $url .= ($query ? '&' : '?')."cart_id={$orderId}";
+        return $url .= ($query ? '&' : '?')."order_id={$orderId}";
     }
 
     /**
@@ -414,6 +437,8 @@ class CreateTelrRequest extends AbstractTelrRequest implements Arrayable
             'bill_zip' => $this->getBillingZip(),
             'bill_country' => $this->getBillingCountry(),
             'bill_email' => $this->getBillingEmail(),
+            'bill_phone' => $this->getBillingPhone(),
+
         ];
     }
 }

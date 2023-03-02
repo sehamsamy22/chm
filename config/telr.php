@@ -19,8 +19,8 @@ return [
         'ivp_method' => "create",
         'ivp_store' =>'25748',
         'ivp_authkey' => 'g37LC@MnNZ#x9k6r',
-        'return_auth' => '/api/handle-payment/success',
-        'return_can' => '/api/handle-payment/cancel',
-        'return_decl' => '/api/handle-payment/declined',
+        'return_auth' => 'https://chm.sa/payment?status=true',
+        'return_can' => 'https://chm.sa/payment/cancel',
+        'return_decl' => 'https://chm.sa/payment?status=false',
     ]
 ];
