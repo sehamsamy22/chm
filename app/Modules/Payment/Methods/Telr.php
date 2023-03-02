@@ -42,7 +42,8 @@ class Telr extends PaymentContract
 
     public function payCallBack($request)
     {
-        $payment_id = $request['cart_id'];
+        // dd($request);
+        $payment_id = $request['order_id'];
 
     }
 

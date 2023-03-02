@@ -124,7 +124,7 @@ class CreateTelrRequest extends AbstractTelrRequest implements Arrayable
      */
     public function getSuccessURL()
     {
-        return $this->appendOrderIdToURL(config('telr.create.return_auth'), $this->getCartId());
+        return $this->appendOrderIdToURL(config('telr.create.return_auth'), $this->getOrderId());
     }
 
     /**
