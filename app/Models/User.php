@@ -92,7 +92,7 @@ class User extends Authenticatable
     public function cart()
     {
 
-        return $this->hasOne(Cart::class);
+        return $this->hasOne(Cart::class)->whereNull('ordered_at');
     }
 
     public function wallet()
