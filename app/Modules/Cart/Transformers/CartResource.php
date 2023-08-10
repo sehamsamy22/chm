@@ -27,7 +27,7 @@ class CartResource extends JsonResource
             'payment_methods' => PaymentResource::collection(PaymentMethod::with(['credentials'])->get()),
             'items' =>($this->type=='items')? $this->items->transform(function ($item) {
                 return [
-                    'id' => $item->id,
+                    'id' => $item->pivot->id,
                     'price' => round($item->pivot->price,2) ,
                     'quantity' => $item->pivot->quantity,
                     'total' => round($item->pivot->price,2),

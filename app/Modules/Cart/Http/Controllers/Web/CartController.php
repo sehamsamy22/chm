@@ -33,7 +33,7 @@ class CartController extends Controller
     {
         $currency = $request->header('currency');
         $requests=$request->all();
-        $items = $this->CartRepository->cookiesItems($requests,$currency,);
+        $items = $this->CartRepository->cookiesItems($requests,$currency);
         return $this->apiResponse($items);
     }
 
@@ -45,12 +45,13 @@ class CartController extends Controller
             if ($validations) return $this->errorResponse($validations->getMessage(), [], 422);
         }
         $cart = $this->CartRepository->storeCart($requests);
+        // dd($cart);
         return $this->apiResponse(new CartResource($cart));
     }
 
     public function deleteItem($id)
     {
-        $cart =Auth::user()->cart();
+        $cart =Auth::user()->cart;
         if ($cart->type=='items'){
             $newCart = $this->CartRepository->delete($id);
         }  else{
@@ -64,7 +65,7 @@ class CartController extends Controller
 
     public function deleteCart()
     {
-        Auth::user()->cart()->delete();
+        Auth::user()->cart->delete();
         return $this->apiResponse(['message' => "Cart deleted successfully"]);
     }
 

@@ -45,7 +45,7 @@ class Cart extends Model
     public function items()
     {
         return $this->belongsToMany(Product::class)
-            ->withPivot('quantity', 'price')->withTimestamps()->withoutGlobalScopes();
+            ->withPivot('quantity', 'price','id')->withTimestamps()->withoutGlobalScopes();
     }
 
     public function additions()
