@@ -46,7 +46,7 @@ class ProductResource extends JsonResource
             'time_period' => $this->time_period,
             'bundle' => $this->bundle,
             'store_currency' => $this->store->country->currency->code  ?? '',
-            'category' => new CategoryResource($this->category),
+             'category' => new CategoryResource($this->category),
             'brand' => new BrandResource($this->brand),
             'bundle_products' => $this->bundle == 1 ? $this->bundles->transform(function ($product) {
                 return new ProductResource(Product::find($product->product_id));
@@ -76,7 +76,7 @@ class ProductResource extends JsonResource
             'package_categories' => $this->packageCategories->transform(function ($category) {
                 return   new CategoryResource($category->category);
             }),
-        ];
+       ];
     }
 
     public function getWishesUsers($type)

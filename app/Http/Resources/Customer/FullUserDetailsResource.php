@@ -44,9 +44,7 @@ class FullUserDetailsResource extends JsonResource
             }),
             'cart' =>
                 $this->cart
-                ?
-                    $this->cart->items->isEmpty()
-                    ?
+                ? $this->cart->items->isEmpty() ?
                     [new SubscriptionResource(($this->cart->type=='custom')?$this->cart->customSubscription:$this->cart->normalSubscription)]
                         : optional(new CartResource($this->cart))->items->transform(function ($item) {
                         return [
