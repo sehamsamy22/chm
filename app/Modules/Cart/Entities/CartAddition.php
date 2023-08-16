@@ -12,6 +12,7 @@ class CartAddition extends Model
 {
     use HasFactory;
     protected $fillable = ['product_id','addition_id','cart_id'];
+    // protected $table="cart_additions";
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id');

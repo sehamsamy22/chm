@@ -2,6 +2,7 @@
 
 use App\Modules\Address\Entities\Address;
 use App\Modules\Cart\Entities\Cart;
+use App\Modules\Cart\Entities\CartAddition;
 use App\Modules\Cart\Repositories\CartRepository;
 use App\Modules\Coupon\Entities\Coupon;
 use App\Modules\Coupon\Repositories\CouponRepository;
@@ -12,6 +13,7 @@ use App\Modules\Order\ValidationRules\ProductStocks;
 use App\Modules\Order\ValidationRules\serviceOrder;
 use App\Modules\Payment\Entities\PaymentMethod;
 use App\Modules\Payment\Entities\ShippingMethod;
+use App\Modules\Product\Entities\Product;
 use App\Modules\Subscription\Entities\SubscriptionDeliveryCount;
 use App\Services\Validation\Validator;
 
@@ -128,6 +130,14 @@ class OrderRepository
         })->toArray();
     }
 
+      public function getCartAdditonalItems($user, $forOrder = false)
+    {
+        $cart = $this->cartRepository->getUserCart($user);
+        $ids= CartAddition::where('cart_id',$cart->id)->pluck('addition_id')->toArray();
+        $additions= Product::whereIn('id',$ids)->get();
+        return  $additions;
+       ;
+    }
     public function getShippingPrice($id)
     {
         $address = Address::find($id);
@@ -149,10 +159,15 @@ class OrderRepository
         $data['subscription_id']=$user->cart->subscription_id;
         $order = $user->orders()->create($data);
         $cartItems = $this->getCartItems($user);
+        $cartAdditonalItems=$this->getCartAdditonalItems($user);
+        // dd($cartAdditonalItems);
+        // $merge=array_merge($cartItems->toArray(),$cartAdditonalItems->toArray());
+        // $d= collect($merge);
+
         $order->products()->attach($cartItems);
+        $order->products()->attach($cartAdditonalItems);
         if ($user->cart->type=='custom'){
             foreach ($user->cart->subscriptionItems as $item) {
-//                dd($item);
                 $order->subscriptionItems()->create([
                     'item_id' => $item->item_id,
                 ]);
