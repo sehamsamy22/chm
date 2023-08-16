@@ -44,6 +44,7 @@ class OrderResource extends JsonResource
                     'product' => new ProductResource($item),
                 ];
             }),
+            'dayCount' => $this->dayCount->count,
             'type'=>$this->type,
             'subscription' => ($this->type!='items')?[new SubscriptionResource(($this->type=='custom')?$this->customSubscription:$this->normalSubscription)]:[],
             'subscriptionItems' => $this->subscriptionItems->transform(function ($subscriptionitem) use ($request) {
