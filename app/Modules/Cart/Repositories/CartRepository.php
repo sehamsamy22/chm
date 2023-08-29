@@ -12,8 +12,20 @@ use App\Modules\Subscription\Entities\Subscription;
 use App\Modules\Subscription\Entities\SubscriptionSize;
 use App\Modules\Subscription\Transformers\SubscriptionResource;
 use App\Scopes\NormalProductScope;
+
+
+
+
+
+
+
+
+
+
+
 use App\Services\Validation\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CartRepository
 {
@@ -44,6 +56,7 @@ class CartRepository
         }
         //---------------if products ----------------------------------
         if (isset($data['items'])) {
+            // dd($data['items']);
             $cart->update([
                 "type" => "items",
                 "subscription_id" => null
@@ -71,8 +84,10 @@ class CartRepository
                 ];
             });
 
-            $cart->items()->syncWithoutDetaching($items);
+            $cart->items()->sync($items);
         }
+        
+       
         return $cart;
     }
 
@@ -122,9 +137,11 @@ class CartRepository
     // remove record from the database
     public function delete($id)
     {
-        $cart = Auth::user()->cart;
-        $cart->items()->detach($id);
-        return $cart;
+
+       $item = DB::table('cart_product')->where('id', $id)->delete();
+         $cart = Auth::user()->cart;
+
+    return  $cart;
     }
 
     public function createCart()
