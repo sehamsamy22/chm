@@ -168,6 +168,7 @@ class ProductRepository
             $products->where('price', '= >', $min_price);
         }
    if (isset($params['package_categories'])&& $params['package_categories']== true) {
+    
            $products->has('packageCategories');
   
         }

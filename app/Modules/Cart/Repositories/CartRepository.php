@@ -84,7 +84,7 @@ class CartRepository
                 ];
             });
 
-            $cart->items()->sync($items);
+            $cart->items()->attach($items);
         }
         
        
