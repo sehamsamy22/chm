@@ -145,7 +145,10 @@ class ProductRepository
                 $q->where('parent_id', $mainCategory);
             });
         }
-
+      if (isset($params['package_categories'])&& $params['package_categories']== true) {
+           $products->has('packageCategories')
+        
+        }
         if (!empty($params['sub_categories'])) {
             $products->whereIn('category_id', $params['sub_categories']);
         }
