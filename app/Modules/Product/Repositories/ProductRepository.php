@@ -145,7 +145,7 @@ class ProductRepository
                 $q->where('parent_id', $mainCategory);
             });
         }
-
+   
         if (!empty($params['sub_categories'])) {
             $products->whereIn('category_id', $params['sub_categories']);
         }
@@ -167,7 +167,11 @@ class ProductRepository
             $min_price = !isset($params['min_price']) ? 0 : $params['min_price'];
             $products->where('price', '= >', $min_price);
         }
-
+   if (isset($params['package_categories'])&& $params['package_categories']== true) {
+    
+           $products->has('packageCategories');
+  
+        }
 //       if (!$pagination) return $products->get();
 //      if (!isset($params['main_category'])) return $products->get();
 //         OPTIONS  FILTER
