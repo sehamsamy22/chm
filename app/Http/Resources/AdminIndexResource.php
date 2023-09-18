@@ -21,12 +21,12 @@ class AdminIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            // 'categories' => $this['categories'],
+            'categories' => $this['categories'],
             'customers' => $this['customers'],
             'products' => $this['products'],
             'ads' => $this['ads'],
             'orders' => $this['orders'],
-            // 'lastProducts' =>ProductResource::collection( $this['lastProducts']),
+            'lastProducts' =>ProductResource::collection( $this['lastProducts']),
           'lastCustomer' => UserResource::collection($this['lastCustomer']),
            'lastOrders' =>OrderResource::collection($this['lastOrders']),
 //            'moreOrderedProduct' => ProductResource::collection($this['moreOrderedProduct']),

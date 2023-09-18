@@ -31,7 +31,7 @@ class HomeController extends Controller
         $lastCustomer = User::orderBy('created_at', 'desc')
             ->get()->take(5);
         $data = [
-            // 'categories' => $categories,
+            'categories' => $categories,
             'customers' => $customers,
             'products' => $products,
             'orders' => $orders,
