@@ -74,9 +74,9 @@ return [
                     'created_at' => Carbon::parse($rate->created_at)->format('d-m-Y')
                 ];
             }),
-            'package_categories' => $this->packageCategories->transform(function ($category) {
-                return   new CategoryResource($category->category);
-            }),
+            // 'package_categories' => $this->packageCategories->transform(function ($category) {
+            //     return   new CategoryResource($category->category);
+            // }),
        ];
     }
 
