@@ -23,7 +23,8 @@ class ProductResource extends JsonResource
     {
         $user = Auth::guard('api')->user();
 //   dd($request->header('Content-language') ? $this->category->name : $this->category->getTranslations('name'));
-        return [
+dd($this->category);   
+return [
             'id' => $this->id,
             'name' => $request->header('Content-language') ? $this->name : $this->getTranslations('name'),
             'description' => $request->header('Content-language') ? $this->description : $this->getTranslations('description'),
