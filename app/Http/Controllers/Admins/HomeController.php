@@ -17,7 +17,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $categories = Category::count();
+        // $categories = Category::count();
         $customers = User::count();
         $products = Product::count();
         $ads = Ad::count();
@@ -31,7 +31,7 @@ class HomeController extends Controller
         $lastCustomer = User::orderBy('created_at', 'desc')
             ->get()->take(5);
         $data = [
-            'categories' => $categories,
+            // 'categories' => $categories,
             'customers' => $customers,
             'products' => $products,
             'orders' => $orders,

@@ -21,7 +21,7 @@ class AdminIndexResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'categories' => $this['categories'],
+            // 'categories' => $this['categories'],
             'customers' => $this['customers'],
             'products' => $this['products'],
             'ads' => $this['ads'],
