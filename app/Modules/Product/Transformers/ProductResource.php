@@ -47,7 +47,7 @@ return [
             'time_period' => $this->time_period,
             'bundle' => $this->bundle,
             'store_currency' => $this->store->country->currency->code  ?? '',
-             'category' =>$this->category ? new CategoryResource($this->category):"",
+             'category' => new CategoryResource($this->category)?? "",
             'brand' => new BrandResource($this->brand),
             'bundle_products' => $this->bundle == 1 ? $this->bundles->transform(function ($product) {
                 return new ProductResource(Product::find($product->product_id));
