@@ -40,10 +40,10 @@ class Order extends Model
     protected $fillable = ['user_id', 'address_id', 'method_id', 'status', 'total', 'unique_id','massage','service_product_details',
     'amount', 'store_id','transaction_id','notes','pickup_date','time_id','received_name','gift_url', 'type_id', 'delivery_id', 'day_count_id','type','subscription_id'];
 
-    protected static function booted()
-    {
-        static::addGlobalScope(new OrderStoreScope());
-    }
+    // protected static function booted()
+    // {
+    //     static::addGlobalScope(new OrderStoreScope());
+    // }
 
     public function store(): BelongsTo
     {
