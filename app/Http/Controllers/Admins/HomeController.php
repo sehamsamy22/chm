@@ -17,7 +17,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // $categories = Category::count();
+        $categories = Category::count();
         $customers = User::count();
         $products = Product::count();
         $ads = Ad::count();
