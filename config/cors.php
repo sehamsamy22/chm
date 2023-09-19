@@ -23,7 +23,7 @@ return [
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['store_id','*'],
+    'allowed_headers' => ['*'],
 
     'exposed_headers' => [],
 
