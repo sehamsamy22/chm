@@ -24,7 +24,7 @@ class HomeController extends Controller
         $ads = Ad::count();
 
         $orders = Order::count();
-          dd(Request::headers(), Request::header('store_id'));  
+          dd("erwer",Request::headers(), Request::header('store_id'));  
 
         $lastOrders = Order::where('store_id','=', app('Illuminate\Http\Request')->header('store_id')) ->orderBy('created_at', 'desc')
             ->get()->take(5);
