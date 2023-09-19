@@ -38,7 +38,7 @@ class OrderController extends Controller
 
       public function index(Request $request)
     {
-        $orders = Order::all();
+        $orders = Order::where('store_id','=', app('Illuminate\Http\Request')->header('store_id'))->get();
         $total = $orders->count();
         return $this->apiResponse([
             "orders" => OrderResource::collection($orders->paginate($request['pageLimit'])),
