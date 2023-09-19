@@ -11,12 +11,12 @@ use App\Modules\Order\Entities\Order;
 use App\Modules\Product\Entities\Product;
 use App\Modules\Product\Transformers\ProductResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $categories = Category::count();
         $customers = User::count();
@@ -24,7 +24,7 @@ class HomeController extends Controller
         $ads = Ad::count();
 
         $orders = Order::count();
-          dd("erwer",Request::headers(), Request::header('store_id'));  
+          dd("erwer",$request->header(), $request->header('store_id'));  
 
         $lastOrders = Order::where('store_id','=', app('Illuminate\Http\Request')->header('store_id')) ->orderBy('created_at', 'desc')
             ->get()->take(5);
