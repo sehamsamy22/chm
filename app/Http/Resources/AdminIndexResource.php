@@ -28,7 +28,7 @@ class AdminIndexResource extends JsonResource
             'products' => $this['products'],
             'ads' => $this['ads'],
             'orders' => $this['orders'],
-            'lastProducts' =>new ProductCollection( $this['lastProducts']),
+            'lastProducts' =>ProductResource::collection( $this['lastProducts']),
           'lastCustomer' => UserResource::collection($this['lastCustomer']),
            'lastOrders' =>OrderResource::collection($this['lastOrders']),
 //            'moreOrderedProduct' => ProductResource::collection($this['moreOrderedProduct']),

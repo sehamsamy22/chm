@@ -24,10 +24,10 @@ class Category extends Model
     protected $fillable = ['name', 'image', 'parent_id', 'store_id', 'have_additions','is_package'];
     public $translatable = ['name'];
 
-    protected static function booted()
-    {
-        static::addGlobalScope(new CategoryStoreScope());
-    }
+    // protected static function booted()
+    // {
+    //     static::addGlobalScope(new CategoryStoreScope());
+    // }
 
     public function subcategories(): HasMany
     {
