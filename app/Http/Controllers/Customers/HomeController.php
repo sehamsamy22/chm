@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
 
     {
-dd(app('Illuminate\Http\Request')->header('store_id'));
+      dd(app('Illuminate\Http\Request')->header('store_id'));
         $appSettings = Setting::whereIn('name', ['appName', 'appDesc', 'copyright'])->pluck('value', 'name')->toArray();
         $socialSettings = Setting::where('module', 'social')->get();
         $footerLinks= Setting::whereIn('name', ['footerLinks'])->first();
